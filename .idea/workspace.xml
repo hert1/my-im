@@ -1,0 +1,1278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0b7df957-ffc2-4846-9cc9-aacca408a096" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/ICategoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/user/IAdminService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/BlogInfoBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/CategoryBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/user/AboutMeBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/user/BlogConfigBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/AdminConfigDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/CategoryDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/AdminServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/CategoryServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/AddBlogReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/AddCommentReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/Article.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/ArticleResp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/BlogConfigResp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/BlogInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/IndexResp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/InfoResp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/StatisticsResp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/UpdataConfigReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/AdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/shiro/AuthRealm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/IArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/IArticle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/IContentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/IArticleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/user/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/user/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/ArticleBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/ArticleBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/BaseResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/BaseResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/BlogAddFormBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/BlogContent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/CommentBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/CommentBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/CommentsDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/StatisticBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/Tags.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/Tag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/ThemeBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/apiservice/article/IArticle.class" beforeDir="false" afterPath="$PROJECT_DIR$/api/target/classes/com/im/api/apiservice/article/IArticle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/apiservice/article/IContentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/apiservice/user/IUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/api/target/classes/com/im/api/apiservice/user/IUserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/article/ArticleBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/article/ArticleBean.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/article/BaseResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/article/BaseResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/article/BlogAddFormBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/article/BlogContent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/article/CommentBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/article/CommentBean.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/article/CommentsDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/article/StatisticBean.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/article/Tags.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/user/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/api/target/classes/com/im/api/dto/user/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/dao-log.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/dao-log.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/web-log.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/web-log.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redisMq/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/redis/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redisMq/src/main/java/com/im/redis/client/RedisClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis/src/main/java/com/im/redis/client/RedisClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redisMq/src/main/java/com/im/redis/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/redis/src/main/java/com/im/redis/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redisMq/src/main/resources/redis.properties" beforeDir="false" afterPath="$PROJECT_DIR$/redis/src/main/resources/redis.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/im/service/config/ApplicationStartup.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/config/ApplicationStartup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/im/service/config/ScheduledController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/config/ScheduledController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/ArticleDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/ArticleDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/ContentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/ContentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/ArticleImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/ArticleImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/ContentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/ArticleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/UserLoginRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/ArticleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/ArticleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/BlogController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/IndexController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/IndexController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/Usercontroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/Usercontroller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/im/web/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/im/web/interceptor/SessionInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/interceptor/SessionInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/im/web/interceptor/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/im/web/interceptor/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/resources/static/css/favourite.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/resources/static/css/favourite.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/resources/static/images/thinks.png" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/resources/static/images/thinksbbbbb.png" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="$PROJECT_DIR$/api/target/" />
+    <ignored path="$PROJECT_DIR$/redis/target/" />
+    <ignored path="$PROJECT_DIR$/service/target/" />
+    <ignored path="$PROJECT_DIR$/web/target/" />
+    <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-682702551">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="8" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.11" value="1" />
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.2" value="2" />
+          <entry key="project.open.time.20" value="1" />
+          <entry key="project.open.time.23" value="2" />
+          <entry key="project.open.time.29" value="1" />
+          <entry key="project.opened" value="9" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="class" value="17" />
+          <entry key="css" value="1" />
+          <entry key="ftl" value="4" />
+          <entry key="gif" value="4" />
+          <entry key="html" value="3" />
+          <entry key="java" value="269" />
+          <entry key="jpg" value="5" />
+          <entry key="js" value="2" />
+          <entry key="png" value="30" />
+          <entry key="properties" value="6" />
+          <entry key="xml" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CLASS" value="17" />
+          <entry key="CSS" value="1" />
+          <entry key="FTL" value="4" />
+          <entry key="HTML" value="3" />
+          <entry key="Image" value="39" />
+          <entry key="JAVA" value="269" />
+          <entry key="JavaScript" value="2" />
+          <entry key="Properties" value="6" />
+          <entry key="XML" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="dummy" value="7" />
+          <entry key="ftl" value="93" />
+          <entry key="java" value="5897" />
+          <entry key="properties" value="12" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="FTL" value="93" />
+          <entry key="JAVA" value="5897" />
+          <entry key="PLAIN_TEXT" value="7" />
+          <entry key="Properties" value="12" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.spring.boot.mvc.usages">
+        <counts>
+          <entry key="RestClientRequestRunnerNavigator.fromCode" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/ServiceApplication.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/controller/AdminController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="127">
+              <caret line="262" lean-forward="true" selection-start-line="262" selection-end-line="262" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/IArticleService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="640">
+              <caret line="72" column="11" selection-start-line="72" selection-start-column="11" selection-end-line="72" selection-end-column="11" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/impl/ArticleServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="312">
+              <caret line="85" column="24" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
+              <folding>
+                <element signature="e#2014#2015#0" expanded="true" />
+                <element signature="e#2065#2066#0" expanded="true" />
+                <element signature="e#2512#2513#0" expanded="true" />
+                <element signature="e#2563#2564#0" expanded="true" />
+                <element signature="e#2633#2634#0" expanded="true" />
+                <element signature="e#2659#2660#0" expanded="true" />
+                <element signature="e#2759#2760#0" expanded="true" />
+                <element signature="e#2784#2785#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/dao/ContentDao.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="80" column="42" lean-forward="true" selection-start-line="80" selection-start-column="42" selection-end-line="80" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Kotlin File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>/article/l</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/web/src/main/resources/templates/index/index0.ftl" />
+        <option value="$PROJECT_DIR$/web/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/exception/GlobalExceptionHandler.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/BaseResponse.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/ICategoryService.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/CategoryServiceImpl.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/CategoryDao.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/Article.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/ArticleResp.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/AddCommentReq.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/IndexResp.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/InfoResp.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/BlogInfo.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/BlogInfoBean.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/shiro/AuthRealm.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/user/User.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/user/BlogConfigBean.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/BlogConfigResp.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/UpdataConfigReq.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/user/AboutMeBean.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/user/IAdminService.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/AdminServiceImpl.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/AdminConfigDao.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/ArticleImpl.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/IArticle.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/user/IUserService.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/UserServiceImpl.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/ArticleDao.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/UserDao.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/config/ApplicationStartup.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/config/ScheduledController.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/interceptor/SessionInterceptor.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/interceptor/config/WebConfig.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/Usercontroller.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/StatisticsResp.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/IndexController.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/CommentBean.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/CategoryBean.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/Tag.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/ArticleController.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/bean/AddBlogReq.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/ArticleBean.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/impl/ArticleServiceImpl.java" />
+        <option value="$PROJECT_DIR$/web/src/main/java/com/im/web/controller/AdminController.java" />
+        <option value="$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/IArticleService.java" />
+        <option value="$PROJECT_DIR$/service/src/main/java/com/im/service/dao/ContentDao.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="D:/apache-maven-3.6.0" />
+        <option name="userSettingsFile" value="D:\apache-maven-3.6.0\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="my-im" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="my-im" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/web/src/main/resources/static/vendor/editor/lib/codemirror/package.json" />
+    </packageJsonPaths>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="width" value="1920" />
+    <option name="height" value="1040" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <hideEmptyPackages ProjectPane="true" />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="apiservice" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="apiservice" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="dto" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="dto" type="462c0819:PsiDirectoryNode" />
+              <item name="article" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="dto" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="impl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="bean" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="shiro" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="my-im" type="b2602c69:ProjectViewProjectNode" />
+              <item name="my-im" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546951911304" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\gitrepo\my-im\web\src\main\resources\templates\index" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.WebApplication">
+    <configuration name="ServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.im.service.ServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WebApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="web" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.im.web.WebApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.ServiceApplication" />
+      <item itemvalue="Spring Boot.WebApplication" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0b7df957-ffc2-4846-9cc9-aacca408a096" name="Default Changelist" comment="" />
+      <created>1546571201141</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1546571201141</updated>
+      <workItem from="1546571210262" duration="281000" />
+      <workItem from="1546571543072" duration="3942000" />
+      <workItem from="1546581866299" duration="71000" />
+      <workItem from="1546584999562" duration="5479000" />
+      <workItem from="1546593102484" duration="5547000" />
+      <workItem from="1546650782333" duration="3984000" />
+      <workItem from="1546655979080" duration="2876000" />
+      <workItem from="1546823979907" duration="56102000" />
+      <workItem from="1546909378633" duration="24438000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="102720000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1920" height="1040" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26881722" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Web" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3289183" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3289183" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49892473" weight="0.39955848" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50107527" side_tool="true" weight="0.39955848" />
+      <window_info anchor="bottom" id="Java Enterprise" order="10" />
+      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.3289183" />
+      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.49892473" weight="0.3289183" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Maven Projects" order="5" weight="0.3295699" />
+      <window_info anchor="right" id="SciView" order="6" />
+      <window_info anchor="right" id="Database" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Theme Preview" order="9" />
+      <window_info anchor="right" id="Bean Validation" order="10" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/dto/user/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="36" column="7" lean-forward="true" selection-start-line="36" selection-start-column="7" selection-end-line="36" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/apache-maven-3.6.0/repo/org/springframework/spring-beans/5.1.3.RELEASE/spring-beans-5.1.3.RELEASE.jar!/org/springframework/beans/BeanUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-453">
+          <caret line="347" column="52" selection-start-line="347" selection-start-column="46" selection-end-line="347" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/dto/user/BlogConfigBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="640">
+          <caret line="47" column="31" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/WebApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/dto/user/AboutMeBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="640">
+          <caret line="27" column="23" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/bean/UserLoginRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/controller/BlogController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="30" column="14" lean-forward="true" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/user/IAdminService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="640">
+          <caret line="31" column="29" selection-start-line="27" selection-start-column="4" selection-end-line="31" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/BlogAddFormBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/user/IUserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/dao/AdminConfigDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="42" column="45" selection-start-line="42" selection-start-column="45" selection-end-line="42" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/dao/UserDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/config/ApplicationStartup.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-162">
+          <caret line="19" column="7" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/config/ScheduledController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="45" column="101" selection-start-line="45" selection-start-column="101" selection-end-line="45" selection-end-column="101" />
+          <folding>
+            <element signature="e#0#1474#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/interceptor/SessionInterceptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="63" column="17" lean-forward="true" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#2659#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/interceptor/config/WebConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="12" column="42" lean-forward="true" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/controller/Usercontroller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="38" column="1" lean-forward="true" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/ServiceApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/IArticle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="25" column="7" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/dao/ArticleDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/BlogInfoBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-386">
+          <caret line="12" column="7" lean-forward="true" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/impl/AdminServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="22" column="34" lean-forward="true" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/impl/UserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="37" column="56" lean-forward="true" selection-start-line="37" selection-start-column="56" selection-end-line="37" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/bean/AddCommentReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/bean/Article.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="18" column="18" lean-forward="true" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/bean/ArticleResp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/bean/BlogConfigResp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="37" column="11" lean-forward="true" selection-start-line="37" selection-start-column="11" selection-end-line="37" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/bean/BlogInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="24" lean-forward="true" selection-start-column="24" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/bean/InfoResp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="11" column="7" lean-forward="true" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/bean/IndexResp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="12" column="3" lean-forward="true" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/bean/StatisticsResp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="20" column="25" lean-forward="true" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/bean/UpdataConfigReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="25" column="7" lean-forward="true" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/util/UUID.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+          <folding>
+            <element signature="e#715#716#0" expanded="true" />
+            <element signature="e#771#772#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/ICategoryService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="13" column="30" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/dao/CategoryDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="17" column="60" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/controller/IndexController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="93" column="87" selection-start-line="93" selection-start-column="87" selection-end-line="93" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/impl/CategoryServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="637">
+          <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_111/jre/lib/rt.jar!/java/sql/Date.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+          <folding>
+            <element signature="e#441#442#0" expanded="true" />
+            <element signature="e#468#469#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/CategoryBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="46" column="7" lean-forward="true" selection-start-line="46" selection-start-column="7" selection-end-line="46" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/CommentBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="464">
+          <caret line="28" column="16" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/Tag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="22" lean-forward="true" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/apache-maven-3.6.0/repo/org/jboss/netty/netty/3.2.5.Final/netty-3.2.5.Final.jar!/org/jboss/netty/channel/socket/nio/NioClientSocketPipelineSink.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="339" selection-start-line="339" selection-end-line="339" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/impl/ArticleImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="613">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/controller/ArticleController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1126">
+          <caret line="109" column="5" lean-forward="true" selection-start-line="109" selection-start-column="5" selection-end-line="109" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/bean/AddBlogReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="16" column="23" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/dto/article/ArticleBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="30" column="7" lean-forward="true" selection-start-line="30" selection-start-column="7" selection-end-line="30" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/src/main/java/com/im/api/apiservice/article/IArticleService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="640">
+          <caret line="72" column="11" selection-start-line="72" selection-start-column="11" selection-end-line="72" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/impl/ArticleServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="85" column="24" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
+          <folding>
+            <element signature="e#2014#2015#0" expanded="true" />
+            <element signature="e#2065#2066#0" expanded="true" />
+            <element signature="e#2512#2513#0" expanded="true" />
+            <element signature="e#2563#2564#0" expanded="true" />
+            <element signature="e#2633#2634#0" expanded="true" />
+            <element signature="e#2659#2660#0" expanded="true" />
+            <element signature="e#2759#2760#0" expanded="true" />
+            <element signature="e#2784#2785#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/im/service/dao/ContentDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="80" column="42" lean-forward="true" selection-start-line="80" selection-start-column="42" selection-end-line="80" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/apache-maven-3.6.0/repo/org/springframework/spring-web/5.1.3.RELEASE/spring-web-5.1.3.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="107" selection-start-line="107" selection-end-line="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/im/web/controller/AdminController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="262" lean-forward="true" selection-start-line="262" selection-end-line="262" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Python 3.5 interpreter library</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring|service</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.39770114" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: ch.qos.logback:logback-classic:1.2.3</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
