@@ -35,24 +35,27 @@ public class ArticleImpl implements IArticle {
     UserDao userDao;
 
     @Override
-    public ArticleBean getArticleByNum(int cid) {
+    public ArticleBean getArticleByNum(String cid) {
         return articleDao.getContentsByNum(cid);
     }
 
     @Override
-    public List<CommentBean> getCommentsByAid(int fid, int rid) {
+    public List<CommentBean> getCommentsByAid(String fid, int rid) {
         List<CommentBean> commentsByAid = articleDao.getCommentsByAid(fid, rid);
-        for (CommentBean commentBean : commentsByAid) {
-            Integer id = commentBean.getId();
-            List<CommentBean> commentsByAid1 = articleDao.getCommentsByAid(fid, id);
-            if(commentsByAid1!=null){
-                commentBean.setChildren(commentsByAid1);
-                getCommentsByAid(fid,id);
+        if(commentsByAid!=null&&commentsByAid.size()>0){
+            for (CommentBean commentBean : commentsByAid) {
+                Integer id = commentBean.getId();
+                List<CommentBean> commentsByAid1 = getCommentsByAid(fid, id);
+                if(commentsByAid1==null&&commentsByAid1.size()==0) {
+                    commentBean.setChildren(commentsByAid1);
+                }
             }
-           continue;
+
         }
+
         return commentsByAid;
     }
+
 
     @Override
     public int insertComments(CommentBean commentBean) {

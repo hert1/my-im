@@ -1,10 +1,10 @@
 package com.im.web.bean;
 
-import com.im.api.dto.article.ArticleBean;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author viruser

@@ -75,25 +75,6 @@ public class ArticleController {
     }
 
     /**
-     * 通过文章Id到查看文章
-     *
-     * @param cid
-     * @return
-     */
-    @GetMapping(value = {"/article"})
-    @ResponseBody
-    public BaseResponse getArticle(@RequestParam(value = "id") int cid) {
-        ArticleResp articleResp = new ArticleResp();
-        ArticleBean contentsById = article.getArticleByNum(cid);
-        List<CategoryBean> categoryByArticleCategoryId = categoryService.getCategoryByArticleCategoryId(contentsById.getCategoryId());
-        articleResp.setArticle(contentsById);
-        articleResp.setCategory(categoryByArticleCategoryId);
-        articleResp.setTags(null);
-
-        return new BaseResponse(true, "请求成功", 200, articleResp);
-    }
-
-    /**
      * 获取评论
      *
      * @param id
@@ -101,7 +82,7 @@ public class ArticleController {
      */
     @GetMapping(value = "/comments/list")
     public @ResponseBody
-    BaseResponse getComment(@RequestParam(value = "articleId") int id) {
+    BaseResponse getComment(@RequestParam(value = "articleId") String id) {
         IndexResp indexResp = new IndexResp();
         List<CommentBean> commentsByAid = article.getCommentsByAid(id, 0);
         indexResp.setList(commentsByAid);

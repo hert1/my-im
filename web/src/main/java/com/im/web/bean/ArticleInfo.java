@@ -10,14 +10,15 @@ import java.util.List;
 
 /**
  * @author viruser
- * @create 2019/1/7
+ * @create 2019/1/9
  * @since 1.0.0
  */
-@Getter
 @Setter
-public class ArticleResp {
+@Getter
+public class ArticleInfo {
 
-    private ArticleBean article;
-    private CategoryBean category;
-    private List<Tag> tags;
+    private ArticleBean article;//文章
+    private List<Tag> tags;//标签
+    private CategoryBean category;//类别
+
 }

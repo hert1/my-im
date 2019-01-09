@@ -1,17 +1,15 @@
 package com.im.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.im.api.apiservice.article.IArticleService;
-import com.im.api.dto.article.ArticleBean;
-import com.im.api.dto.article.BaseResponse;
-import com.im.api.dto.article.CategoryBean;
-import com.im.api.dto.article.Tag;
+import com.im.api.dto.article.*;
+import com.im.api.util.UUID;
+import com.im.service.dao.ArticleDao;
 import com.im.service.dao.ContentDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.alibaba.dubbo.config.annotation.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -28,12 +26,22 @@ import java.util.List;
 public class ArticleServiceImpl implements IArticleService {
 
     @Autowired
+    ArticleDao articleDao;
+    @Autowired
     ContentDao contentDao;
-    @Override
-    public List<ArticleBean> getArticleByNumAndSize(int num, int size,int status) {
 
-        PageHelper.startPage(num,size);
-        List<ArticleBean> contentsByNumAndSize = contentDao.getContentsByNumAndSize(status);//0正常发布
+    @Override
+    public List<ArticleBean> getArticleByNumAndSize(BaseArticleBean articleList) {
+        List<ArticleBean> contentsByNumAndSize = null;
+        PageHelper.startPage(articleList.getPage(), articleList.getPageSize());
+        if ("category".equals(articleList.getBy())) {
+            contentsByNumAndSize = contentDao.getContentsByCateory(articleList.getStatus(), articleList.getCategoryId());
+        } else if ("tag".equals(articleList.getBy())) {
+            List<String> articleIdByTag = contentDao.getArticleIdByTag(articleList.getTagId());
+            contentsByNumAndSize = contentDao.getContents(articleIdByTag);
+        } else {
+            contentsByNumAndSize = contentDao.getContentsByNumAndSize(articleList.getStatus());//0正常发布
+        }
         return contentsByNumAndSize;
     }
 
@@ -95,12 +103,12 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public void modifyCategory(String categoryId, String categoryName) {
-        contentDao.modifyCategory(categoryId,categoryName);
+        contentDao.modifyCategory(categoryId, categoryName);
     }
 
     @Override
     public void modifyTag(String tagId, String tagName) {
-        contentDao.modifyTag(tagId,tagName);
+        contentDao.modifyTag(tagId, tagName);
     }
 
     @Override
@@ -109,9 +117,73 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public void bindArticleAndTag(String aid, String tid) {
-        contentDao.bindArticleAndTag(aid,tid,new Date());
+    public void saveArticle(ArticleBean articleBean) {
+        contentDao.saveArticle(articleBean);
     }
 
+    @Override
+    public void modifyArticle(ArticleBean articleBean) {
+        contentDao.modifyArticle(articleBean);
+    }
 
+    @Override
+    public void deleteArticle(String id) {
+        ArticleBean contentsByNum = contentDao.getContentsByNum(id);
+        if (contentsByNum != null) {
+            if (contentsByNum.getStatus() == 1) {
+                contentDao.deleteArticle(id);
+            } else {
+                contentDao.removeArticle(id);
+            }
+        }
+        //  contentDao.modifyArticle(articleBean);
+    }
+
+    @Override
+    public void bindArticleAndTag(String aid, String tid) {
+        contentDao.bindArticleAndTag(aid, tid, new Date());
+    }
+
+    @Override
+    public CategoryBean getCategory(String categoryId) {
+        return contentDao.getCategory(categoryId);
+    }
+
+    @Override
+    public Tag getTag(String tagId) {
+        return contentDao.getTag(tagId);
+    }
+
+    @Override
+    public List<Tag> getTagByArticleId(String articleId) {
+        return contentDao.getTagByArticleId(articleId);
+    }
+
+    @Override
+    public List<FriendsBean> getFriendsList(int page, int pageSize) {
+        PageHelper.startPage(page, pageSize);
+
+        return contentDao.getFriendsList();
+    }
+
+    @Override
+    public List<FriendTypeList> getFriendTypeList() {
+        return contentDao.getFriendTypeList();
+    }
+
+    @Override
+    public void addFriends(String name, String url, int typeId) {
+        FriendsBean friendsBean = new FriendsBean();
+        friendsBean.setFriend_id(UUID.UU64());
+        friendsBean.setName(name);
+        friendsBean.setCreate_time(new Date());
+        friendsBean.setType_id(typeId);
+        friendsBean.setUrl(url);
+        contentDao.addFriends(friendsBean);
+    }
+
+    @Override
+    public void deleteFriend(String fid) {
+        contentDao.deleteFriend(fid);
+    }
 }

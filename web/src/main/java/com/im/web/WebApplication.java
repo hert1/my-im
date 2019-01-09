@@ -3,9 +3,10 @@ package com.im.web;
 import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableDubboConfiguration
 @ComponentScan(basePackages = {"com.im.redis", "com.im.api","com.im.web","com.im.web.bean"})
 public class WebApplication {

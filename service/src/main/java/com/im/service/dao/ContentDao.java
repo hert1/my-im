@@ -1,9 +1,7 @@
 package com.im.service.dao;
 
-import com.im.api.dto.article.ArticleBean;
-import com.im.api.dto.article.BaseResponse;
-import com.im.api.dto.article.CategoryBean;
-import com.im.api.dto.article.Tag;
+import com.im.api.dto.article.*;
+import jdk.nashorn.internal.objects.annotations.Setter;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
@@ -17,12 +15,41 @@ import java.util.List;
  */
 @Mapper
 public interface ContentDao {
+
     /**\
-     *
+     *通过id查文章
+     * @return
+     */
+    @Select("select * from article where id=#{id}")
+    public ArticleBean getContentsByNum(String id);
+    /**
+     *通过状态查文章
      * @return
      */
     @Select("select * from article where status=#{status}")
     public List<ArticleBean> getContentsByNumAndSize(int status);
+    /**
+     *通过状态以及归类差文章
+     * @return
+     */
+    @Select("select * from article where status=#{status} and categoryId = #{categoryId}")
+    public List<ArticleBean> getContentsByCateory(int status,String categoryId);
+    /**查询文章ID通过tagid
+     * @return
+     */
+
+    @Select("select article_id from article_tag_mapper where tag_id=#{tagId} ")
+    public List<String> getArticleIdByTag(String tagId);
+    /**
+     * @return
+     */
+    @Select("<script>"
+            + "SELECT * FROM article WHERE id IN "
+            + "<foreach item='item' index='index' collection='aid' open='(' separator=',' close=')'>"
+            + "#{item}"
+            + "</foreach>"
+            + "</script>")
+    public List<ArticleBean> getContents(@Param("aid")List aid);
 
     /**
      * 条数
@@ -102,6 +129,26 @@ public interface ContentDao {
     @Insert("insert into article (id,title,createTime,categoryId,content,htmlContent,cover,subMessage) values(#{id},#{title},#{createTime},#{categoryId},#{content},#{htmlContent},#{cover},#{subMessage})")
     public void publArticle( ArticleBean articleBean);
     /**
+     * save文章
+     */
+    @Insert("insert into article (id,title,createTime,categoryId,content,htmlContent,cover,subMessage,status) values(#{id},#{title},#{createTime},#{categoryId},#{content},#{htmlContent},#{cover},#{subMessage},#{status})")
+    public void saveArticle( ArticleBean articleBean);
+    /**
+     * edit文章
+     */
+    @Update("update article set title = #{title},updateTime = #{updateTime},categoryId = #{categoryId},content = #{content},htmlContent = #{htmlContent},cover = #{cover},subMessage = #{subMessage} where id = #{id}")
+    public void modifyArticle( ArticleBean articleBean);
+    /**
+     * remove文章
+     */
+    @Update("update article set status = 1 where id = #{id}")
+    public void removeArticle(String id);
+    /**
+     * delete文章
+     */
+    @Delete("delete from article where id = #{id}")
+    public void deleteArticle(String id);
+    /**
      * 绑定标和文章
      */
     @Insert("insert into article_tag_mapper (article_id,tag_id,create_time) values(#{aid},#{tid},#{date})")
@@ -116,4 +163,39 @@ public interface ContentDao {
      */
     @Update("update  article set categoryId = '' WHERE categoryId =#{categoryId}")
     public void deleteArticleAndCateory(String categoryId);
+    /**
+     * 获取分类
+     */
+    @Select("select * from category where id = #{categoryId}")
+    public CategoryBean getCategory( String categoryId);
+    /**
+     * 获取标签
+     */
+    @Select("select * from tag where id = #{tagId}")
+    public Tag getTag( String tagId);
+    /**
+     * 通过articleID获取tag
+     */
+    @Select("SELECT tag.* FROM tag ,article,article_tag_mapper WHERE article_tag_mapper.article_id = article_tag_mapper.tag_id and article.id = #{articleId} ")
+    public List<Tag> getTagByArticleId( String articleId);
+    /**
+     * select friends
+     */
+    @Select("SELECT * from friends ")
+    public List<FriendsBean> getFriendsList();
+    /**
+     * select friends type
+     */
+    @Select("SELECT * from friends_type ")
+    public List<FriendTypeList> getFriendTypeList();
+    /**
+     *添加friends
+     */
+    @Insert("insert into friends (name,url,friend_id,create_time,type_id) values(#{name},#{url},#{friend_id},#{create_time},#{type_id})")
+    public void addFriends(FriendsBean bean);
+    /**
+     *删除friends
+     */
+    @Delete("delete from friends where friend_id = #{fid}")
+    public void deleteFriend(String fid);
 }

@@ -1,9 +1,7 @@
 package com.im.api.apiservice.article;
 
 
-import com.im.api.dto.article.ArticleBean;
-import com.im.api.dto.article.CategoryBean;
-import com.im.api.dto.article.Tag;
+import com.im.api.dto.article.*;
 
 import java.util.List;
 
@@ -15,11 +13,9 @@ import java.util.List;
 public interface IArticleService {
     /**\
      *
-     * @param num 页数
-     * @param size 页面大小
      * @return
      */
-    public List<ArticleBean> getArticleByNumAndSize(int num, int size,int status);
+    public List<ArticleBean> getArticleByNumAndSize(BaseArticleBean articleList);
 
     /**
      * 查询文章数量
@@ -86,7 +82,48 @@ public interface IArticleService {
      */
     public void publArticle( ArticleBean articleBean);
     /**
+     * save文章
+     */
+    public void saveArticle( ArticleBean articleBean);
+    /**
+     * edit文章
+     */
+    public void modifyArticle( ArticleBean articleBean);
+    /**
+     * remove文章
+     */
+    public void deleteArticle(String id);
+
+    /**
      * 绑定标和文章
      */
     public void bindArticleAndTag( String aid,String tid);
+    /**
+     * 获取分类
+     */
+    public CategoryBean getCategory( String categoryId);
+    /**
+     * 获取标签
+     */
+    public Tag getTag( String tagId);
+    /**
+     * 通过articleID获取tag
+     */
+    public List<Tag> getTagByArticleId( String articleId);
+    /**
+     *
+     */
+    public List<FriendsBean> getFriendsList(int page, int pageSize);
+    /**
+     *
+     */
+    public List<FriendTypeList> getFriendTypeList();
+    /**
+     *添加friends
+     */
+    public void addFriends(String name,String url, int typeId);
+    /**
+     *删除friends
+     */
+    public void deleteFriend(String fid);
 }

@@ -1,19 +1,15 @@
 package com.im.web.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.im.api.apiservice.article.IArticle;
 import com.im.api.apiservice.article.IArticleService;
+import com.im.api.apiservice.article.ICategoryService;
 import com.im.api.apiservice.user.IAdminService;
-import com.im.api.dto.article.ArticleBean;
-import com.im.api.dto.article.BaseResponse;
-import com.im.api.dto.article.CategoryBean;
-import com.im.api.dto.article.Tag;
+import com.im.api.dto.article.*;
 import com.im.api.dto.user.AboutMeBean;
 import com.im.api.dto.user.BlogConfigBean;
 import com.im.api.util.UUID;
-import com.im.web.bean.AddBlogReq;
-import com.im.web.bean.BlogConfigResp;
-import com.im.web.bean.StatisticsResp;
-import com.im.web.bean.UpdataConfigReq;
+import com.im.web.bean.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +31,10 @@ public class AdminController {
     IAdminService adminService;
     @Reference
     IArticleService articleService;
+    @Reference
+    IArticle article;
+    @Reference
+    ICategoryService categoryService;
 
     /**
      * 添加分类
@@ -121,14 +121,12 @@ public class AdminController {
     /**
      * 获取文章列表
      */
-    @GetMapping(value = "/article/list")
+    @PostMapping(value = "/article/list")
     @ResponseBody
-    public BaseResponse getList(@RequestParam String by
-            , @RequestParam int status
-            , @RequestParam int page
-            , @RequestParam int pageSize) throws Exception {
-
-        List<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(page, pageSize, status);//0为状态正常发布
+    public BaseResponse getList(@RequestBody GetArticleListReq req) throws Exception {
+        BaseArticleBean articleList = new BaseArticleBean();
+        BeanUtils.copyProperties(req,articleList);
+        List<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(articleList);//0为状态正常发布
 
         return BaseResponse.ok(articleByNumAndSize);
     }
@@ -295,7 +293,206 @@ public class AdminController {
             articleService.bindArticleAndTag(id,tid);
         });
         articleService.publArticle(articleBean);
+        return BaseResponse.ok(id);
+
+    }
+    /**
+     * save章
+     *
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "/article/save")
+    @ResponseBody
+    public BaseResponse saveArticle(@RequestBody AddBlogReq req) throws Exception {
+        ArticleBean articleBean = new ArticleBean();
+        BeanUtils.copyProperties(req,articleBean);
+        articleBean.setCategoryId(req.getCategory().getId());
+        articleBean.setCreateTime(new Date());
+        articleBean.setStatus(2);
+        String id = UUID.UU64();
+        articleBean.setId(id);
+        List<Tag> tags = req.getTags();
+        tags.forEach(tag -> {
+            String tid = tag.getId();
+            articleService.bindArticleAndTag(id,tid);
+        });
+        articleService.saveArticle(articleBean);
+        return BaseResponse.ok(id);
+
+    }
+    /**
+     * 编辑文章
+     *
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "/article/modify")
+    @ResponseBody
+    public BaseResponse modifyArticle(@RequestBody AddBlogReq req) throws Exception {
+        ArticleBean articleBean = new ArticleBean();
+        BeanUtils.copyProperties(req,articleBean);
+        articleBean.setCategoryId(req.getCategory().getId());
+        BeanUtils.copyProperties(req,articleBean);
+        articleBean.setCategoryId(req.getCategory().getId());
+        articleBean.setUpdateTime(new Date());
+        List<Tag> tags = req.getTags();
+        tags.forEach(tag -> {
+            String tid = tag.getId();
+            articleService.bindArticleAndTag(articleBean.getId(),tid);
+        });
+        articleService.modifyArticle(articleBean);
+        return BaseResponse.ok(articleBean.getId());
+
+    }
+    /**
+     * 删除文章
+     * @throws Exception
+     */
+    @PostMapping(value = "/article/delete")
+    @ResponseBody
+    public BaseResponse deleteArticle(@RequestBody String id) throws Exception {
+        articleService.deleteArticle(id);
         return BaseResponse.ok();
 
+    }
+    /**
+     * 获取文章信息
+     * @throws Exception
+     */
+    @GetMapping(value = "/article/info")
+    @ResponseBody
+    public BaseResponse getArticle(@RequestParam String id) throws Exception {
+        ArticleBean articleByNum = article.getArticleByNum(id);
+        String categoryId = articleByNum.getCategoryId();
+        List<CategoryBean> categoryByArticleCategoryId = categoryService.getCategoryByArticleCategoryId(categoryId);
+        String articleId = articleByNum.getId();
+        List<Tag> tagByArticleId = articleService.getTagByArticleId(articleId);
+        ArticleResp articleResp = new ArticleResp();
+        articleResp.setTags(tagByArticleId);
+        articleResp.setArticle(articleByNum);
+        if (categoryByArticleCategoryId!=null&&categoryByArticleCategoryId.size()>0) {
+            articleResp.setCategory(categoryByArticleCategoryId.get(0));
+        }
+        return BaseResponse.ok(articleResp);
+
+    }
+    /**
+     * 获取分类
+     * @throws Exception
+     */
+    @GetMapping(value = "/category")
+    @ResponseBody
+    public BaseResponse getCategory(@RequestParam String categoryId) throws Exception {
+        CategoryBean category = articleService.getCategory(categoryId);
+        return BaseResponse.ok(category);
+    }
+    /**
+     * 获取标签
+     * @throws Exception
+     */
+    @GetMapping(value = "/tag")
+    @ResponseBody
+    public BaseResponse getTag(@RequestParam String tagId) throws Exception {
+        Tag tag = articleService.getTag(tagId);
+        return BaseResponse.ok(tag);
+    }
+    /**
+     * 获取友链列表
+     * @throws Exception
+     */
+    @GetMapping(value = "/friends/list")
+    @ResponseBody
+    public BaseResponse getFriendsList(@RequestParam int page,@RequestParam int pageSize) throws Exception {
+        List<FriendsBean> friendsList = articleService.getFriendsList(page, pageSize);
+        return BaseResponse.ok(friendsList);
+    }
+    /**
+     * 添加友链
+     * @throws Exception
+     */
+    @PostMapping(value = "/friends/add")
+    @ResponseBody
+    public BaseResponse addFriend(@RequestParam String name,@RequestParam String url,@RequestParam int typeId) throws Exception {
+        articleService.addFriends(name,url,typeId);
+        return BaseResponse.ok();
+    }
+    /**
+     * 编辑友链
+     * @throws Exception
+     */
+    @PostMapping(value = "/friends/modify")
+    @ResponseBody
+    public BaseResponse modifyFriend(@RequestParam String tagId) throws Exception {
+        return BaseResponse.ok();
+    }
+    /**
+     * 删除友链
+     * @throws Exception
+     */
+    @PostMapping(value = "/friends/delete")
+    @ResponseBody
+    public BaseResponse deleteFriend(@RequestParam String friendId) throws Exception {
+        articleService.deleteFriend(friendId);
+        return BaseResponse.ok();
+    }
+    /**
+     * 获取友链类型列表
+     * @throws Exception
+     */
+    @GetMapping(value = "/friends/typeList")
+    @ResponseBody
+    public BaseResponse getFriendTypeList() throws Exception {
+        List<FriendTypeList> friendTypeList = articleService.getFriendTypeList();
+        return BaseResponse.ok(friendTypeList);
+    }
+
+    /**
+     * 回复
+     * @param articleId
+     * @param name
+     * @param replyId
+     * @param content
+     * @param sourceContent
+     * @param ticket
+     * @param randstr
+     * @param parentId
+     * @return
+     */
+    @PostMapping(value = "/comments/add")
+    public @ResponseBody
+    BaseResponse comment(@RequestParam String articleId
+            , @RequestParam String name
+            , @RequestParam int replyId
+            , @RequestParam String content
+            , @RequestParam String sourceContent
+            , @RequestParam String ticket
+            , @RequestParam String randstr
+            , @RequestParam(defaultValue = "0") int parentId) {
+        CommentBean commentBean = new CommentBean();
+        commentBean.setName(name);
+        commentBean.setArticle_id(articleId);
+        commentBean.setParent_id(parentId);
+        commentBean.setReply_id(replyId);
+        commentBean.setContent(content);
+        commentBean.setSource_content(sourceContent);
+        commentBean.setCreate_time(new java.sql.Date(System.currentTimeMillis()));
+        int i = article.insertComments(commentBean);
+        return new BaseResponse(true, "请求成功", 200, i);
+    }
+    /**
+     * 获取评论
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/comments/list")
+    public @ResponseBody
+    BaseResponse getComment(@RequestParam(value = "articleId") String id) {
+        IndexResp indexResp = new IndexResp();
+        List<CommentBean> commentsByAid = article.getCommentsByAid(id, 0);
+        indexResp.setList(commentsByAid);
+        indexResp.setCount(commentsByAid.size());
+        return new BaseResponse(true, "请求成功", 200, indexResp);
     }
 }

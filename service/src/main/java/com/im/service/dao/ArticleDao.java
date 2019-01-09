@@ -17,11 +17,11 @@ import java.util.List;
 @Mapper
 public interface ArticleDao {
     /**\
-     *通过cid查文章
+     *通过id查文章
      * @return
      */
     @Select("select * from article where id=#{id}")
-    public ArticleBean getContentsByNum(int id);
+    public ArticleBean getContentsByNum(String id);
 
     /**
      *通过fid,rid查回复
@@ -29,7 +29,7 @@ public interface ArticleDao {
      * @return
      */
     @Select("select * from comments where article_id=#{article_id} and reply_id = #{reply_id}")
-    public List<CommentBean> getCommentsByAid(int article_id,int reply_id);
+    public List<CommentBean> getCommentsByAid(String article_id,int reply_id);
     /**
      *通过fid ,id查回复
      * @param article_id

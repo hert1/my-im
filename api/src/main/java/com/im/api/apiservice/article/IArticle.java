@@ -16,12 +16,12 @@ public interface IArticle {
      *通过cid查文章
      * @return
      */
-    public ArticleBean getArticleByNum(int cid);
+    public ArticleBean getArticleByNum(String cid);
     /**
      *通过aid查回复
      * @return
      */
-    public List<CommentBean> getCommentsByAid(int fid,int rid);
+    public List<CommentBean> getCommentsByAid(String fid,int rid);
 
     /**
      * 回复

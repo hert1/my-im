@@ -1,23 +1,22 @@
 package com.im.web.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.im.api.apiservice.article.IArticle;
 import com.im.api.apiservice.article.IArticleService;
 import com.im.api.apiservice.article.ICategoryService;
+import com.im.api.apiservice.user.IAdminService;
 import com.im.api.apiservice.user.IUserService;
 import com.im.api.dto.article.*;
+import com.im.api.dto.user.AboutMeBean;
 import com.im.redis.client.RedisClient;
-import com.im.web.bean.Article;
-import com.im.web.bean.BlogInfo;
-import com.im.web.bean.IndexResp;
+import com.im.web.bean.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,7 +25,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Controller
-@RequestMapping(value = "w/article")
+@RequestMapping(value = "w")
 public class IndexController {
 
     @Reference
@@ -34,28 +33,54 @@ public class IndexController {
     @Reference
     ICategoryService categoryService;
     @Reference
-    IUserService userService;
+    IAdminService adminService;
+    @Reference
+    IArticle article;
     @Autowired
     RedisClient redisClient;
+    @Reference
+    IUserService userService;
 
-    @GetMapping(value = {"/getAbout"})
+    @GetMapping(value = {"/article/getAbout"})
     @ResponseBody
     public BaseResponse getAbout() {
-
-        return null;
+        AboutMeBean aboutMe = adminService.getAboutMe();
+        return BaseResponse.ok(aboutMe);
     }
 
-    @GetMapping(value = {"/archives"})
+    /**
+     * 获取友链列表
+     * @return
+     */
+    @GetMapping(value = {"/friends/list"})
     @ResponseBody
-    public BaseResponse getArticleArchives(HttpServletRequest request
-            , @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
-            , @RequestParam(value = "page") int page) throws Exception {
-
-        return null;
-
+    public BaseResponse getBlogFriendsList() {
+        List<FriendTypeList> friendTypeList = articleService.getFriendTypeList();
+        return BaseResponse.ok(friendTypeList);
+    }
+    /**
+     * 获取标签列表
+     * @return
+     */
+    @GetMapping(value = {"/tag/list"})
+    @ResponseBody
+    public BaseResponse getBlogTagList() {
+        List<Tag> tagList = articleService.getTagList();
+        return BaseResponse.ok(tagList);
+    }
+    /**
+     * 获取分类列表
+     * @return
+     */
+    @GetMapping(value = {"/category/list"})
+    @ResponseBody
+    public BaseResponse getBlogCategoryList() {
+        List<CategoryBean> categoryBeans  = articleService.getCategoryList();
+        return BaseResponse.ok(categoryBeans);
     }
 
-    @GetMapping(value = {"/blogInfo"})
+
+    @GetMapping(value = {"/article/blogInfo"})
     @ResponseBody
     public BaseResponse getInfo(HttpServletRequest request) {
         Integer articleCount = articleService.getArticleNum(0);
@@ -74,35 +99,55 @@ public class IndexController {
     /**
      * 首页
      *
-     * @param request
-     * @param pageSize
      * @return
      * @throws Exception
      */
-    @GetMapping(value = {"/list"})
+    @PostMapping(value = {"/article/list","/article/archives"})
     @ResponseBody
-    public BaseResponse index(HttpServletRequest request
-            , @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
-            , @RequestParam(value = "page") int page) throws Exception {
+    public BaseResponse index(@RequestBody GetArticleListReq req) throws Exception {
         IndexResp indexResp = new IndexResp();
-        List<Article> list = new ArrayList<>();
-        Article article = new Article();
-        List<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(page, pageSize,0);//0为状态正常发布
+        List<ArticleInfo> articleInfoList = new LinkedList<>();
+        BaseArticleBean articleList = new BaseArticleBean();
+        BeanUtils.copyProperties(req,articleList);
+        List<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(articleList);//0为状态正常发布
         articleByNumAndSize.forEach(articleBean -> {
-            String id = articleBean.getId();
+            ArticleInfo articleInfo = new ArticleInfo();
             String categoryId = articleBean.getCategoryId();
             List<CategoryBean> categoryByArticleCategoryId = categoryService.getCategoryByArticleCategoryId(categoryId);
-            article.setCategory(categoryByArticleCategoryId);
-            Tag tag = new Tag();
-            tag.setLength(-1);
-            article.setTags(tag);
-            article.setArticle(articleBean);
-            list.add(article);
+            List<Tag> tagByArticleId = articleService.getTagByArticleId(articleBean.getId());
+            articleInfo.setArticle(articleBean);
+            articleInfo.setTags(tagByArticleId);
+            if (categoryByArticleCategoryId != null && categoryByArticleCategoryId.size() > 0) {
+                articleInfo.setCategory(categoryByArticleCategoryId.get(0));
+            }
+            articleInfoList.add(articleInfo);
         });
-        indexResp.setList(list);
-        indexResp.setCount(list.size());
-        return new BaseResponse(true, "请求成功", 200, indexResp);
+        indexResp.setList(articleInfoList);
+        Integer articleNum = articleService.getArticleNum(0);
+        indexResp.setCount(articleNum);
+        return BaseResponse.ok(indexResp);
 
+    }
+
+    /**
+     * 获取文章信息
+     * @param id
+     * @return
+     */
+    @GetMapping(value = {"/article"})
+    @ResponseBody
+    public BaseResponse getBlogArticle(@RequestParam String id) {
+        ArticleBean articleByNum = article.getArticleByNum(id);
+        String categoryId = articleByNum.getCategoryId();
+        List<CategoryBean> categoryByArticleCategoryId = categoryService.getCategoryByArticleCategoryId(categoryId);
+        List<Tag> tagByArticleId = articleService.getTagByArticleId(id);
+        ArticleResp articleResp = new ArticleResp();
+        articleResp.setTags(tagByArticleId);
+        articleResp.setArticle(articleByNum);
+        if (categoryByArticleCategoryId!=null&&categoryByArticleCategoryId.size()>0) {
+            articleResp.setCategory(categoryByArticleCategoryId.get(0));
+        }
+        return BaseResponse.ok(articleResp);
     }
 
 }
