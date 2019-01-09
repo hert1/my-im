@@ -47,8 +47,9 @@ public class ArticleImpl implements IArticle {
                 Integer id = commentBean.getId();
                 List<CommentBean> commentsByAid1 = getCommentsByAid(fid, id);
                 if(commentsByAid1==null&&commentsByAid1.size()==0) {
-                    commentBean.setChildren(commentsByAid1);
+                    return commentsByAid;
                 }
+                commentBean.setChildren(commentsByAid1);
             }
 
         }
