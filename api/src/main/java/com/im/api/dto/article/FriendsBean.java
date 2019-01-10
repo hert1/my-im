@@ -50,6 +50,10 @@ public class FriendsBean implements Serializable {
      *所属分类id
      */
     private int type_id;
+    /**
+     *所属分类name
+     */
+    private String type_name;
 
 
 }

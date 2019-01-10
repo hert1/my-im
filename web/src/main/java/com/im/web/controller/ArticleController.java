@@ -2,11 +2,9 @@ package com.im.web.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.im.api.apiservice.article.IArticle;
+import com.im.api.apiservice.article.IArticleService;
 import com.im.api.apiservice.article.ICategoryService;
-import com.im.api.dto.article.ArticleBean;
-import com.im.api.dto.article.BaseResponse;
-import com.im.api.dto.article.CategoryBean;
-import com.im.api.dto.article.CommentBean;
+import com.im.api.dto.article.*;
 import com.im.redis.client.RedisClient;
 import com.im.web.annotation.SessionCheck;
 import com.im.web.bean.ArticleResp;
@@ -28,6 +26,8 @@ import java.util.List;
 @RequestMapping(value = "w")
 public class ArticleController {
 
+    @Reference
+    IArticleService articleService;
     @Reference
     IArticle article;
     @Reference
@@ -88,5 +88,26 @@ public class ArticleController {
         indexResp.setList(commentsByAid);
         indexResp.setCount(commentsByAid.size());
         return new BaseResponse(true, "请求成功", 200, indexResp);
+    }
+
+    /**
+     * 获取文章信息
+     * @param id
+     * @return
+     */
+    @GetMapping(value = {"/article"})
+    @ResponseBody
+    public BaseResponse getBlogArticle(@RequestParam String id) {
+        ArticleBean articleByNum = article.getArticleByNum(id);
+        String categoryId = articleByNum.getCategoryId();
+        List<CategoryBean> categoryByArticleCategoryId = categoryService.getCategoryByArticleCategoryId(categoryId);
+        List<Tag> tagByArticleId = articleService.getTagByArticleId(id);
+        ArticleResp articleResp = new ArticleResp();
+        articleResp.setTags(tagByArticleId);
+        articleResp.setArticle(articleByNum);
+        if (categoryByArticleCategoryId!=null&&categoryByArticleCategoryId.size()>0) {
+            articleResp.setCategory(categoryByArticleCategoryId.get(0));
+        }
+        return BaseResponse.ok(articleResp);
     }
 }

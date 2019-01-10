@@ -181,7 +181,7 @@ public interface ContentDao {
     /**
      * select friends
      */
-    @Select("SELECT * from friends ")
+    @Select("SELECT * from friends ,friends_type where friends.type_id = friends_type.id")
     public List<FriendsBean> getFriendsList();
     /**
      * select friends type

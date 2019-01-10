@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Component
 @Setter
@@ -39,7 +40,7 @@ public class User  implements Serializable {
     /**
      * 创建时间
      */
-    private int create_time;
+    private Date create_time;
     /**
      * 状态，0为正常，默认0
      */

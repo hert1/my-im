@@ -41,6 +41,10 @@ public class IndexController {
     @Reference
     IUserService userService;
 
+    /**
+     * 关于我
+     * @return
+     */
     @GetMapping(value = {"/article/getAbout"})
     @ResponseBody
     public BaseResponse getAbout() {
@@ -55,8 +59,8 @@ public class IndexController {
     @GetMapping(value = {"/friends/list"})
     @ResponseBody
     public BaseResponse getBlogFriendsList() {
-        List<FriendTypeList> friendTypeList = articleService.getFriendTypeList();
-        return BaseResponse.ok(friendTypeList);
+        List<FriendsBean> friendsList = articleService.getFriendsList(1,44);
+        return BaseResponse.ok(friendsList);
     }
     /**
      * 获取标签列表
@@ -79,7 +83,12 @@ public class IndexController {
         return BaseResponse.ok(categoryBeans);
     }
 
-
+    /**
+     *
+     * blog info
+     * @param request
+     * @return
+     */
     @GetMapping(value = {"/article/blogInfo"})
     @ResponseBody
     public BaseResponse getInfo(HttpServletRequest request) {
@@ -129,25 +138,6 @@ public class IndexController {
 
     }
 
-    /**
-     * 获取文章信息
-     * @param id
-     * @return
-     */
-    @GetMapping(value = {"/article"})
-    @ResponseBody
-    public BaseResponse getBlogArticle(@RequestParam String id) {
-        ArticleBean articleByNum = article.getArticleByNum(id);
-        String categoryId = articleByNum.getCategoryId();
-        List<CategoryBean> categoryByArticleCategoryId = categoryService.getCategoryByArticleCategoryId(categoryId);
-        List<Tag> tagByArticleId = articleService.getTagByArticleId(id);
-        ArticleResp articleResp = new ArticleResp();
-        articleResp.setTags(tagByArticleId);
-        articleResp.setArticle(articleByNum);
-        if (categoryByArticleCategoryId!=null&&categoryByArticleCategoryId.size()>0) {
-            articleResp.setCategory(categoryByArticleCategoryId.get(0));
-        }
-        return BaseResponse.ok(articleResp);
-    }
+
 
 }
