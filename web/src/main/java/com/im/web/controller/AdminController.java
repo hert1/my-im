@@ -72,13 +72,6 @@ public class AdminController {
 
     }
 
-    @GetMapping(value = "/webConfig/getAbout")
-    @ResponseBody
-    public BaseResponse getAboutMe() throws Exception {
-
-        AboutMeBean aboutMe = adminService.getAboutMe();
-        return BaseResponse.ok(aboutMe);
-    }
 
     /**
      * 获取分类列表
@@ -96,9 +89,13 @@ public class AdminController {
 
         }
         return BaseResponse.ok(categoryBeans);
-
     }
 
+    /**
+     * 首页
+     * @return
+     * @throws Exception
+     */
     @GetMapping(value = "/statistics/home")
     @ResponseBody
     public BaseResponse getHome() throws Exception {
@@ -127,10 +124,16 @@ public class AdminController {
         BaseArticleBean articleList = new BaseArticleBean();
         BeanUtils.copyProperties(req,articleList);
         List<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(articleList);//0为状态正常发布
-
         return BaseResponse.ok(articleByNumAndSize);
     }
 
+    /**
+     * 获取日志
+     * @param page
+     * @param pageSize
+     * @return
+     * @throws Exception
+     */
     @GetMapping(value = "/sys/log")
     @ResponseBody
     public BaseResponse getLog(@RequestParam int page
@@ -285,6 +288,7 @@ public class AdminController {
         BeanUtils.copyProperties(req,articleBean);
         articleBean.setCategoryId(req.getCategory().getId());
         articleBean.setCreateTime(new Date());
+        articleBean.setPublishTime(new Date());
         String id = UUID.UU64();
         articleBean.setId(id);
         List<Tag> tags = req.getTags();
@@ -307,7 +311,9 @@ public class AdminController {
     public BaseResponse saveArticle(@RequestBody AddBlogReq req) throws Exception {
         ArticleBean articleBean = new ArticleBean();
         BeanUtils.copyProperties(req,articleBean);
-        articleBean.setCategoryId(req.getCategory().getId());
+        if(req.getCategory()!=null) {
+            articleBean.setCategoryId(req.getCategory().getId());
+        }
         articleBean.setCreateTime(new Date());
         articleBean.setStatus(2);
         String id = UUID.UU64();
@@ -351,30 +357,9 @@ public class AdminController {
      */
     @PostMapping(value = "/article/delete")
     @ResponseBody
-    public BaseResponse deleteArticle(@RequestBody String id) throws Exception {
-        articleService.deleteArticle(id);
+    public BaseResponse deleteArticle(@RequestParam String articleId) throws Exception {
+        articleService.deleteArticle(articleId);
         return BaseResponse.ok();
-
-    }
-    /**
-     * 获取文章信息
-     * @throws Exception
-     */
-    @GetMapping(value = "/article/info")
-    @ResponseBody
-    public BaseResponse getArticle(@RequestParam String id) throws Exception {
-        ArticleBean articleByNum = article.getArticleByNum(id);
-        String categoryId = articleByNum.getCategoryId();
-        List<CategoryBean> categoryByArticleCategoryId = categoryService.getCategoryByArticleCategoryId(categoryId);
-        String articleId = articleByNum.getId();
-        List<Tag> tagByArticleId = articleService.getTagByArticleId(articleId);
-        ArticleResp articleResp = new ArticleResp();
-        articleResp.setTags(tagByArticleId);
-        articleResp.setArticle(articleByNum);
-        if (categoryByArticleCategoryId!=null&&categoryByArticleCategoryId.size()>0) {
-            articleResp.setCategory(categoryByArticleCategoryId.get(0));
-        }
-        return BaseResponse.ok(articleResp);
 
     }
     /**
@@ -479,20 +464,5 @@ public class AdminController {
         commentBean.setCreate_time(new java.sql.Date(System.currentTimeMillis()));
         int i = article.insertComments(commentBean);
         return new BaseResponse(true, "请求成功", 200, i);
-    }
-    /**
-     * 获取评论
-     *
-     * @param id
-     * @return
-     */
-    @GetMapping(value = "/comments/list")
-    public @ResponseBody
-    BaseResponse getComment(@RequestParam(value = "articleId") String id) {
-        IndexResp indexResp = new IndexResp();
-        List<CommentBean> commentsByAid = article.getCommentsByAid(id, 0);
-        indexResp.setList(commentsByAid);
-        indexResp.setCount(commentsByAid.size());
-        return new BaseResponse(true, "请求成功", 200, indexResp);
     }
 }

@@ -3,6 +3,7 @@ package com.im.service.dao;
 import com.im.api.dto.article.*;
 import jdk.nashorn.internal.objects.annotations.Setter;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,7 @@ public interface ContentDao {
      * @return
      */
     @Select("select * from article where id=#{id}")
-    public ArticleBean getContentsByNum(String id);
+    public ArticleBean getContentsByNum( String id);
     /**
      *通过状态查文章
      * @return

@@ -4,7 +4,9 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.im.api.apiservice.article.IArticle;
 import com.im.api.apiservice.article.IArticleService;
 import com.im.api.apiservice.article.ICategoryService;
+import com.im.api.apiservice.user.IAdminService;
 import com.im.api.dto.article.*;
+import com.im.api.dto.user.AboutMeBean;
 import com.im.redis.client.RedisClient;
 import com.im.web.annotation.SessionCheck;
 import com.im.web.bean.ArticleResp;
@@ -23,13 +25,14 @@ import java.util.List;
  * @since 1.0.0
  */
 @Controller
-@RequestMapping(value = "w")
 public class ArticleController {
 
     @Reference
     IArticleService articleService;
     @Reference
     IArticle article;
+    @Reference
+    IAdminService adminService;
     @Reference
     ICategoryService categoryService;
     @Autowired
@@ -38,7 +41,7 @@ public class ArticleController {
     UserSession userSession;
 
     /**
-     *回复
+     *添加回复
      * @param articleId
      * @param name
      * @param replyId
@@ -50,7 +53,7 @@ public class ArticleController {
      * @param parentId
      * @return
      */
-    @PostMapping(value = "/comments/add")
+    @PostMapping(value = "/w/comments/add")
     public @ResponseBody
     BaseResponse comment(@RequestParam String articleId
             , @RequestParam String name
@@ -80,7 +83,7 @@ public class ArticleController {
      * @param id
      * @return
      */
-    @GetMapping(value = "/comments/list")
+    @GetMapping(value = {"/w/comments/list","/a/comments/list"})
     public @ResponseBody
     BaseResponse getComment(@RequestParam(value = "articleId") String id) {
         IndexResp indexResp = new IndexResp();
@@ -95,7 +98,7 @@ public class ArticleController {
      * @param id
      * @return
      */
-    @GetMapping(value = {"/article"})
+    @GetMapping(value = {"/w/article","/a/article/info"})
     @ResponseBody
     public BaseResponse getBlogArticle(@RequestParam String id) {
         ArticleBean articleByNum = article.getArticleByNum(id);
@@ -109,5 +112,16 @@ public class ArticleController {
             articleResp.setCategory(categoryByArticleCategoryId.get(0));
         }
         return BaseResponse.ok(articleResp);
+    }
+
+    /**
+     * 关于我
+     * @return
+     */
+    @GetMapping(value = {"/w/article/getAbout","/a/webConfig/getAbout"})
+    @ResponseBody
+    public BaseResponse getAbout() {
+        AboutMeBean aboutMe = adminService.getAboutMe();
+        return BaseResponse.ok(aboutMe);
     }
 }

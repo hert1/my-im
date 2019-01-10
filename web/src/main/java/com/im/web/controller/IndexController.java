@@ -32,8 +32,7 @@ public class IndexController {
     IArticleService articleService;
     @Reference
     ICategoryService categoryService;
-    @Reference
-    IAdminService adminService;
+
     @Reference
     IArticle article;
     @Autowired
@@ -41,16 +40,7 @@ public class IndexController {
     @Reference
     IUserService userService;
 
-    /**
-     * 关于我
-     * @return
-     */
-    @GetMapping(value = {"/article/getAbout"})
-    @ResponseBody
-    public BaseResponse getAbout() {
-        AboutMeBean aboutMe = adminService.getAboutMe();
-        return BaseResponse.ok(aboutMe);
-    }
+
 
     /**
      * 获取友链列表
@@ -86,12 +76,11 @@ public class IndexController {
     /**
      *
      * blog info
-     * @param request
      * @return
      */
     @GetMapping(value = {"/article/blogInfo"})
     @ResponseBody
-    public BaseResponse getInfo(HttpServletRequest request) {
+    public BaseResponse getInfo() {
         Integer articleCount = articleService.getArticleNum(0);
         Integer categoryCount = articleService.getCategoryCount();
         Integer tagCount = articleService.getTagCount();

@@ -11,12 +11,12 @@ import lombok.Setter;
 @Setter
 @Getter
 public class GetArticleListReq {
-    private String by;
-    private String categoryId;
-    private int page;
-    private int pageSize;
-    private int status;
-    private String tagId;
+    private String by;//方法
+    private String categoryId;//分类id
+    private int page;//页
+    private int pageSize;//页面大小
+    private int status;//文章状态
+    private String tagId;//标签id
 
 
 }
