@@ -10,9 +10,13 @@ import com.im.api.dto.user.AboutMeBean;
 import com.im.api.dto.user.BlogConfigBean;
 import com.im.api.util.UUID;
 import com.im.web.bean.*;
+import com.im.web.config.FastDFSClient;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +30,16 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "a")
 public class AdminController {
+
+    @Autowired
+    FastDFSClient fastDFSClient ;
+
+
+    @Value("${fastdfs.http_secret_key}")
+    public  String httpSecretKey;
+
+    @Value("${file_server_addr}")
+    public  String fileServerAddr;
 
     @Reference
     IAdminService adminService;
@@ -52,6 +66,17 @@ public class AdminController {
         articleService.addCategory(categoryBean);
         return BaseResponse.ok();
 
+    }
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "/upload/image")
+    @ResponseBody
+    public BaseResponse getQiniuToken(@RequestParam(value = "file") MultipartFile multipartFile) throws Exception {
+        String path = fastDFSClient.uploadFileWithMultipart(multipartFile);
+        return BaseResponse.ok(path);
     }
 
     /**

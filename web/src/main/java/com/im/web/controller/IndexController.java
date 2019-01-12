@@ -78,7 +78,7 @@ public class IndexController {
      * blog info
      * @return
      */
-    @GetMapping(value = {"/article/blogInfo"})
+    @GetMapping(value = {"/article/info"})
     @ResponseBody
     public BaseResponse getInfo() {
         Integer articleCount = articleService.getArticleNum(0);
