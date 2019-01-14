@@ -68,7 +68,7 @@ public class AdminController {
 
     }
     /**
-     *
+     *    上传图片
      * @return
      * @throws Exception
      */
@@ -76,7 +76,7 @@ public class AdminController {
     @ResponseBody
     public BaseResponse getQiniuToken(@RequestParam(value = "file") MultipartFile multipartFile) throws Exception {
         String path = fastDFSClient.uploadFileWithMultipart(multipartFile);
-        return BaseResponse.ok(path);
+        return BaseResponse.ok("img/"+path);
     }
 
     /**
