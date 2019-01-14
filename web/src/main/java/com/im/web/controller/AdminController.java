@@ -5,6 +5,7 @@ import com.im.api.apiservice.article.IArticle;
 import com.im.api.apiservice.article.IArticleService;
 import com.im.api.apiservice.article.ICategoryService;
 import com.im.api.apiservice.user.IAdminService;
+import com.im.api.apiservice.user.IUserService;
 import com.im.api.dto.article.*;
 import com.im.api.dto.user.AboutMeBean;
 import com.im.api.dto.user.BlogConfigBean;
@@ -41,6 +42,8 @@ public class AdminController {
     @Value("${file_server_addr}")
     public  String fileServerAddr;
 
+    @Reference
+    IUserService userService;
     @Reference
     IAdminService adminService;
     @Reference
@@ -205,7 +208,7 @@ public class AdminController {
     @ResponseBody
     public BaseResponse getWebConfig() throws Exception {
 
-        BlogConfigBean webConfig = adminService.getWebConfig();
+        BlogInfoBean webConfig = userService.getBlogInfo();
         BlogConfigResp blogConfigResp = new BlogConfigResp();
         BeanUtils.copyProperties(webConfig, blogConfigResp);
         blogConfigResp.setAlipayQrcode(webConfig.getAlipay_qrcode());
