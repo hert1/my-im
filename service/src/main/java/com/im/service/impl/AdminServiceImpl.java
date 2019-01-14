@@ -28,20 +28,10 @@ public class AdminServiceImpl implements IAdminService {
     @Autowired
     RedisClient redisClient;
 
-    @Override
-    public BlogConfigBean getWebConfig() {
-        String webConfig = redisClient.get("webConfig");
-        if(!StringUtils.isEmpty(webConfig)) {
-            return JSON.parseObject(webConfig, BlogConfigBean.class);
-        }
-        BlogConfigBean wc = adminConfigDao.getWebConfig();
-        redisClient.set("webConfig",JSON.toJSONString(wc));
-        return wc;
-    }
 
     @Override
     public void setWebConfig(BlogConfigBean blogConfigBean) {
-        redisClient.del("webConfig");
+        redisClient.del("blogInfo");
         adminConfigDao.setWebConfig(blogConfigBean);
     }
 
