@@ -11,6 +11,7 @@ import com.im.service.dao.ArticleDao;
 import com.im.service.dao.ContentDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -36,6 +37,8 @@ public class ArticleServiceImpl implements IArticleService {
     ContentDao contentDao;
     @Autowired
     RedisClient redisClient;
+    @Value("${com.im.cache.time}")
+    long time;
 
     @Override
     public List<ArticleBean> getArticleByNumAndSize(BaseArticleBean articleList) {
@@ -59,7 +62,7 @@ public class ArticleServiceImpl implements IArticleService {
             return Integer.parseInt(num);
         }
         Integer contentsNum = contentDao.getContentsNum(status);
-        redisClient.set("status" + status, String.valueOf(contentsNum));
+        redisClient.setex("status" + status, String.valueOf(contentsNum), (int) time);
         return contentsNum;
     }
 
@@ -70,7 +73,7 @@ public class ArticleServiceImpl implements IArticleService {
             return Integer.parseInt(categoryCount);
         }
         int categoryNum = contentDao.getCategoryNum();
-        redisClient.set("categoryCount", String.valueOf(categoryNum));
+        redisClient.setex("categoryCount", String.valueOf(categoryNum), (int) time);
         return categoryNum;
     }
 
@@ -81,7 +84,7 @@ public class ArticleServiceImpl implements IArticleService {
             return Integer.parseInt(tagCount);
         }
         int tagNum = contentDao.getTagNum();
-        redisClient.set("tagCount", String.valueOf(tagNum));
+        redisClient.setex("tagCount", String.valueOf(tagNum), (int) time);
         return tagNum;
     }
 
@@ -92,7 +95,7 @@ public class ArticleServiceImpl implements IArticleService {
             return Integer.parseInt(commentsCount);
         }
         int cc = contentDao.getCommentsCount();
-        redisClient.set("commentsCount", String.valueOf(cc));
+        redisClient.setex("commentsCount", String.valueOf(cc), (int) time);
         return cc;
     }
 
@@ -117,7 +120,7 @@ public class ArticleServiceImpl implements IArticleService {
             return JSON.parseArray(tagList,Tag.class);
         }
         List<Tag> tl = contentDao.getTagList();
-        redisClient.set("tagList",JSON.toJSONString(tl));
+        redisClient.setex("tagList",JSON.toJSONString(tl), (int) time);
         return tl;
     }
 
@@ -128,7 +131,7 @@ public class ArticleServiceImpl implements IArticleService {
             return JSON.parseArray(categoryList,CategoryBean.class);
         }
         List<CategoryBean> cl = contentDao.getCategoryList();
-        redisClient.set("categoryList",JSON.toJSONString(cl));
+        redisClient.setex("categoryList",JSON.toJSONString(cl), (int) time);
         return cl;
     }
 
@@ -160,21 +163,33 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public void publArticle(ArticleBean articleBean) {
+        redisClient.del("status0");
+        redisClient.del("status1");
+        redisClient.del("status2");
         contentDao.publArticle(articleBean);
     }
 
     @Override
     public void saveArticle(ArticleBean articleBean) {
+        redisClient.del("status0");
+        redisClient.del("status1");
+        redisClient.del("status2");
         contentDao.saveArticle(articleBean);
     }
 
     @Override
     public void modifyArticle(ArticleBean articleBean) {
+        redisClient.del("status0");
+        redisClient.del("status1");
+        redisClient.del("status2");
         contentDao.modifyArticle(articleBean);
     }
 
     @Override
     public void deleteArticle(String id) {
+        redisClient.del("status0");
+        redisClient.del("status1");
+        redisClient.del("status2");
         ArticleBean contentsByNum = contentDao.getContentsByNum(id);
         if (contentsByNum != null) {
             if (contentsByNum.getStatus() == 1) {
@@ -220,7 +235,7 @@ public class ArticleServiceImpl implements IArticleService {
             return JSON.parseArray(friendTypeList,FriendTypeList.class);
         }
         List<FriendTypeList> ftl = contentDao.getFriendTypeList();
-        redisClient.set("friendTypeList",JSON.toJSONString(ftl));
+        redisClient.setex("friendTypeList",JSON.toJSONString(ftl), (int) time);
         return ftl;
 
     }

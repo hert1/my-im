@@ -11,6 +11,7 @@ import com.im.api.util.Tools;
 import com.im.api.util.WebConst;
 import com.im.service.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -29,6 +30,8 @@ public class UserServiceImpl implements IUserService {
     UserDao uaerDao;
     @Autowired
     RedisClient redisClient;
+    @Value("${com.im.cache.time}")
+    long time;
 
     @Override
     @ServiceLogger
@@ -50,7 +53,7 @@ public class UserServiceImpl implements IUserService {
             return JSON.parseObject(blogInfo,BlogInfoBean.class);
         }
         BlogInfoBean bi = uaerDao.getBlogInfo();
-        redisClient.set("blogInfo",JSON.toJSONString(bi));
+        redisClient.setex("blogInfo",JSON.toJSONString(bi), (int) time);
         return bi;
     }
 

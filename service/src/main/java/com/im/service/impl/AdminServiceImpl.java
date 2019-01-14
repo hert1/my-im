@@ -9,6 +9,7 @@ import com.im.redis.client.RedisClient;
 import com.im.service.dao.AdminConfigDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -27,6 +28,8 @@ public class AdminServiceImpl implements IAdminService {
     AdminConfigDao adminConfigDao;
     @Autowired
     RedisClient redisClient;
+    @Value("${com.im.cache.time}")
+    long time;
 
 
     @Override
@@ -51,7 +54,7 @@ public class AdminServiceImpl implements IAdminService {
             return JSON.parseObject(aboutMe, AboutMeBean.class);
         }
         AboutMeBean am = adminConfigDao.getAboutMe();
-        redisClient.set("webConfig",JSON.toJSONString(am));
+        redisClient.setex("webConfig",JSON.toJSONString(am), (int) time);
         return am;
     }
 }

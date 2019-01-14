@@ -11,11 +11,6 @@ import com.im.api.dto.user.BlogConfigBean;
 public interface IAdminService {
 
     /**
-     * 获取配置
-     * @return
-     */
-    BlogConfigBean getWebConfig();
-    /**
      * 更新配置
      * @return
      */
