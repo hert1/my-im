@@ -1,1 +1,0 @@
-<script src="/static/vendor/layui/css/layui.css"></script>

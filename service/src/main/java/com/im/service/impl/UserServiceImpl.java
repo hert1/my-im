@@ -1,6 +1,8 @@
 package com.im.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.im.api.dto.article.BlogInfoBean;
+import com.im.redis.client.RedisClient;
 import com.im.service.annotation.ServiceLogger;
 import com.im.api.apiservice.user.IUserService;
 import com.im.api.dto.user.User;
@@ -9,6 +11,7 @@ import com.im.api.util.Tools;
 import com.im.api.util.WebConst;
 import com.im.service.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -24,7 +27,8 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     UserDao uaerDao;
-
+    @Autowired
+    RedisClient redisClient;
 
     @Override
     @ServiceLogger
@@ -41,7 +45,13 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public BlogInfoBean getBlogInfo() {
-        return uaerDao.getBlogInfo();
+        String blogInfo = redisClient.get("blogInfo");
+        if (!StringUtils.isEmpty(blogInfo)) {
+            return JSON.parseObject(blogInfo,BlogInfoBean.class);
+        }
+        BlogInfoBean bi = uaerDao.getBlogInfo();
+        redisClient.set("blogInfo",JSON.toJSONString(bi));
+        return bi;
     }
 
 

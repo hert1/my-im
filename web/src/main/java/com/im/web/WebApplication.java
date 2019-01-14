@@ -1,5 +1,6 @@
 package com.im.web;
 
+import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,8 +10,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-@EnableDubboConfiguration
-@ComponentScan(basePackages = {"com.im.redis", "com.im.api","com.im.web","com.im.web.bean","com.im.web.config"})
+@EnableDubbo
+@ComponentScan(basePackages = {"com.im.redis", "com.im.api","com.im.web","com.im.web.bean","com.im.web.config","com.im.web.controller"})
 public class WebApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

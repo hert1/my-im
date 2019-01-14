@@ -11,6 +11,7 @@
     <groupId>com.im</groupId>
     <artifactId>api</artifactId>
     <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
     <dependencies>
 
         <dependency>

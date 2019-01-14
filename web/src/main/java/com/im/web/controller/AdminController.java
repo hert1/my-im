@@ -47,8 +47,6 @@ public class AdminController {
     IArticleService articleService;
     @Reference
     IArticle article;
-    @Reference
-    ICategoryService categoryService;
 
     /**
      * 添加分类
@@ -113,11 +111,15 @@ public class AdminController {
             categoryBeans  = articleService.getCategoryList();
 
         }
-        return BaseResponse.ok(categoryBeans);
+        Integer categoryCount = articleService.getCategoryCount();
+        GetArticleListResp resp = new GetArticleListResp();
+        resp.setList(categoryBeans);
+        resp.setCount(categoryCount);
+        return BaseResponse.ok(resp);
     }
 
     /**
-     * 首页
+     * 后台首页
      * @return
      * @throws Exception
      */
@@ -127,9 +129,9 @@ public class AdminController {
         Integer publishCount = articleService.getArticleNum(0);//状态正常的文章总数
         Integer draftsCount = articleService.getArticleNum(2);//草稿箱
         Integer deletedCount = articleService.getArticleNum(1);//删除
-        Integer categoryCount = articleService.getCategoryCount();
-        Integer tagCount = articleService.getTagCount();
-        Integer commentsCount = articleService.getCommentsCount();
+        Integer categoryCount = articleService.getCategoryCount();//分类数
+        Integer tagCount = articleService.getTagCount();//标签数
+        Integer commentsCount = articleService.getCommentsCount();//回复数
         StatisticsResp resp = new StatisticsResp();
         resp.setCategoryCount(categoryCount);
         resp.setCommentsCount(commentsCount);
@@ -149,7 +151,11 @@ public class AdminController {
         BaseArticleBean articleList = new BaseArticleBean();
         BeanUtils.copyProperties(req,articleList);
         List<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(articleList);//0为状态正常发布
-        return BaseResponse.ok(articleByNumAndSize);
+        Integer articleNum = articleService.getArticleNum(articleList.getStatus());
+        GetArticleListResp resp = new GetArticleListResp();
+        resp.setList(articleByNumAndSize);
+        resp.setCount(articleNum);
+        return BaseResponse.ok(resp);
     }
 
     /**
@@ -181,7 +187,11 @@ public class AdminController {
             tagList  = articleService.getTagList();
 
         }
-        return BaseResponse.ok(tagList);
+        Integer tagCount = articleService.getTagCount();
+        GetArticleListResp resp = new GetArticleListResp();
+        resp.setList(tagList);
+        resp.setCount(tagCount);
+        return BaseResponse.ok(resp);
 
     }
 
@@ -222,7 +232,6 @@ public class AdminController {
         aboutMeBean.setMd(aboutMeContent);
         adminService.setAboutMe(aboutMeBean);
         return BaseResponse.ok();
-
     }
 
     /**

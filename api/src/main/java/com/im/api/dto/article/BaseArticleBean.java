@@ -13,10 +13,10 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class BaseArticleBean implements Serializable {
-    private String by;
-    private String categoryId;
+    private String by;//状态
+    private String categoryId;//分类id
     private int page;
     private int pageSize;
-    private int status;
+    private int status;//文章状态
     private String tagId;
 }

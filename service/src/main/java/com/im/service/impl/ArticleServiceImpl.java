@@ -1,15 +1,20 @@
 package com.im.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.im.api.apiservice.article.IArticleService;
 import com.im.api.dto.article.*;
 import com.im.api.util.UUID;
+import com.im.redis.client.RedisClient;
 import com.im.service.dao.ArticleDao;
 import com.im.service.dao.ContentDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -29,6 +34,8 @@ public class ArticleServiceImpl implements IArticleService {
     ArticleDao articleDao;
     @Autowired
     ContentDao contentDao;
+    @Autowired
+    RedisClient redisClient;
 
     @Override
     public List<ArticleBean> getArticleByNumAndSize(BaseArticleBean articleList) {
@@ -47,67 +54,107 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public Integer getArticleNum(int status) {
-        return contentDao.getContentsNum(status);
+        String num = redisClient.get("status" + status);
+        if(!StringUtils.isEmpty(num)) {
+            return Integer.parseInt(num);
+        }
+        Integer contentsNum = contentDao.getContentsNum(status);
+        redisClient.set("status" + status, String.valueOf(contentsNum));
+        return contentsNum;
     }
 
     @Override
     public Integer getCategoryCount() {
+        String categoryCount = redisClient.get("categoryCount");
+        if(!StringUtils.isEmpty(categoryCount)) {
+            return Integer.parseInt(categoryCount);
+        }
         int categoryNum = contentDao.getCategoryNum();
+        redisClient.set("categoryCount", String.valueOf(categoryNum));
         return categoryNum;
     }
 
     @Override
     public Integer getTagCount() {
+        String tagCount = redisClient.get("tagCount");
+        if(!StringUtils.isEmpty(tagCount)) {
+            return Integer.parseInt(tagCount);
+        }
         int tagNum = contentDao.getTagNum();
+        redisClient.set("tagCount", String.valueOf(tagNum));
         return tagNum;
     }
 
     @Override
     public Integer getCommentsCount() {
-        return contentDao.getCommentsCount();
+        String commentsCount = redisClient.get("commentsCount");
+        if(!StringUtils.isEmpty(commentsCount)) {
+            return Integer.parseInt(commentsCount);
+        }
+        int cc = contentDao.getCommentsCount();
+        redisClient.set("commentsCount", String.valueOf(cc));
+        return cc;
     }
 
     @Override
     public void addCategory(CategoryBean category) {
+        redisClient.del("categoryList");
         category.setCreate_time(new java.util.Date());
         contentDao.addCategory(category);
     }
 
     @Override
     public void addTag(Tag tag) {
+        redisClient.del("tagList");
         tag.setCreate_time(new java.util.Date());
         contentDao.addTag(tag);
     }
 
     @Override
     public List<Tag> getTagList() {
-        return contentDao.getTagList();
+        String tagList = redisClient.get("tagList");
+        if(!StringUtils.isEmpty(tagList)) {
+            return JSON.parseArray(tagList,Tag.class);
+        }
+        List<Tag> tl = contentDao.getTagList();
+        redisClient.set("tagList",JSON.toJSONString(tl));
+        return tl;
     }
 
     @Override
     public List<CategoryBean> getCategoryList() {
-        return contentDao.getCategoryList();
+        String categoryList = redisClient.get("categoryList");
+        if(!StringUtils.isEmpty(categoryList)) {
+            return JSON.parseArray(categoryList,CategoryBean.class);
+        }
+        List<CategoryBean> cl = contentDao.getCategoryList();
+        redisClient.set("categoryList",JSON.toJSONString(cl));
+        return cl;
     }
 
     @Override
     public void deleteTag(String tagId) {
+        redisClient.del("tagList");
         contentDao.deleteTag(tagId);
         contentDao.deleteArticleAndTag(tagId);
     }
 
     @Override
     public void deleteCategory(String categoryId) {
+        redisClient.del("categoryList");
         contentDao.deleteCategory(categoryId);
         contentDao.deleteArticleAndCateory(categoryId);
     }
 
     @Override
     public void modifyCategory(String categoryId, String categoryName) {
+        redisClient.del("categoryList");
         contentDao.modifyCategory(categoryId, categoryName);
     }
 
     @Override
     public void modifyTag(String tagId, String tagName) {
+        redisClient.del("tagList");
         contentDao.modifyTag(tagId, tagName);
     }
 
@@ -168,11 +215,19 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public List<FriendTypeList> getFriendTypeList() {
-        return contentDao.getFriendTypeList();
+        String friendTypeList = redisClient.get("friendTypeList");
+        if(!StringUtils.isEmpty(friendTypeList)) {
+            return JSON.parseArray(friendTypeList,FriendTypeList.class);
+        }
+        List<FriendTypeList> ftl = contentDao.getFriendTypeList();
+        redisClient.set("friendTypeList",JSON.toJSONString(ftl));
+        return ftl;
+
     }
 
     @Override
     public void addFriends(String name, String url, int typeId) {
+        redisClient.del("friendsList");
         FriendsBean friendsBean = new FriendsBean();
         friendsBean.setFriend_id(UUID.UU64());
         friendsBean.setName(name);
@@ -184,6 +239,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public void deleteFriend(String fid) {
+        redisClient.del("friendsList");
         contentDao.deleteFriend(fid);
     }
 }
