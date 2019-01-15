@@ -27,13 +27,13 @@ public interface ContentDao {
      *通过状态查文章
      * @return
      */
-    @Select("select * from article where status=#{status}")
+    @Select("select id,title,categoryId,createTime,deleteTime,updateTime,publishTime,status,cover,subMessage,pageview,isEncrypt from article where status=#{status}")
     public List<ArticleBean> getContentsByNumAndSize(int status);
     /**
      *通过状态以及归类差文章
      * @return
      */
-    @Select("select * from article where status=#{status} and categoryId = #{categoryId}")
+    @Select("select id,title,categoryId,createTime,deleteTime,updateTime,publishTime,status,cover,subMessage,pageview,isEncrypt from article where status=#{status} and categoryId = #{categoryId}")
     public List<ArticleBean> getContentsByCateory(int status,String categoryId);
     /**查询文章ID通过tagid
      * @return
@@ -45,7 +45,7 @@ public interface ContentDao {
      * @return
      */
     @Select("<script>"
-            + "SELECT * FROM article WHERE id IN "
+            + "SELECT id,title,categoryId,createTime,deleteTime,updateTime,publishTime,status,cover,subMessage,pageview,isEncrypt FROM article WHERE id IN "
             + "<foreach item='item' index='index' collection='aid' open='(' separator=',' close=')'>"
             + "#{item}"
             + "</foreach>"
