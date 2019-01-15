@@ -17,6 +17,7 @@ public class GetArticleListReq {
     private int pageSize;//页面大小
     private int status;//文章状态
     private String tagId;//标签id
+    private String searchValue;//搜索关键字
 
 
 }

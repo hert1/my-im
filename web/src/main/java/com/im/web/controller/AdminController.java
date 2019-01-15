@@ -324,6 +324,7 @@ public class AdminController {
         ArticleBean articleBean = new ArticleBean();
         BeanUtils.copyProperties(req,articleBean);
         articleBean.setCategoryId(req.getCategory().getId());
+        articleService.bindArticleAndCategory(req.getCategory().getId());
         articleBean.setCreateTime(new Date());
         articleBean.setPublishTime(new Date());
         String id = UUID.UU64();
@@ -376,6 +377,7 @@ public class AdminController {
         ArticleBean articleBean = new ArticleBean();
         BeanUtils.copyProperties(req,articleBean);
         articleBean.setCategoryId(req.getCategory().getId());
+        articleService.bindArticleAndCategory(req.getCategory().getId());
         BeanUtils.copyProperties(req,articleBean);
         articleBean.setCategoryId(req.getCategory().getId());
         articleBean.setUpdateTime(new Date());

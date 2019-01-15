@@ -100,7 +100,7 @@ public class IndexController {
      * @return
      * @throws Exception
      */
-    @PostMapping(value = {"/article/list","/article/archives"})
+    @PostMapping(value = {"/article/list","/article/archives","/article/search"})
     @ResponseBody
     public BaseResponse index(@RequestBody GetArticleListReq req) throws Exception {
         IndexResp indexResp = new IndexResp();
@@ -126,7 +126,6 @@ public class IndexController {
         return BaseResponse.ok(indexResp);
 
     }
-
 
 
 }

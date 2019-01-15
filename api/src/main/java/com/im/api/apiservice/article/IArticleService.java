@@ -102,6 +102,12 @@ public interface IArticleService {
      * 获取分类
      */
     public CategoryBean getCategory( String categoryId);
+
+    /**
+     * 设置category的ArticleCount+1
+     * @param cid
+     */
+    public void bindArticleAndCategory(String cid);
     /**
      * 获取标签
      */

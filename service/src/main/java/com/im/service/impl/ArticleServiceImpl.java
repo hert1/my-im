@@ -12,8 +12,6 @@ import com.im.service.dao.ContentDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -49,6 +47,8 @@ public class ArticleServiceImpl implements IArticleService {
         } else if ("tag".equals(articleList.getBy())) {
             List<String> articleIdByTag = contentDao.getArticleIdByTag(articleList.getTagId());
             contentsByNumAndSize = contentDao.getContents(articleIdByTag);
+        } else if (!StringUtils.isEmpty(articleList.getSearchValue())) {
+            contentsByNumAndSize = contentDao.searchArticle(articleList.getSearchValue());
         } else {
             contentsByNumAndSize = contentDao.getContentsByNumAndSize(articleList.getStatus());//0正常发布
         }
@@ -58,7 +58,7 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public Integer getArticleNum(int status) {
         String num = redisClient.get("status" + status);
-        if(!StringUtils.isEmpty(num)) {
+        if (!StringUtils.isEmpty(num)) {
             return Integer.parseInt(num);
         }
         Integer contentsNum = contentDao.getContentsNum(status);
@@ -69,7 +69,7 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public Integer getCategoryCount() {
         String categoryCount = redisClient.get("categoryCount");
-        if(!StringUtils.isEmpty(categoryCount)) {
+        if (!StringUtils.isEmpty(categoryCount)) {
             return Integer.parseInt(categoryCount);
         }
         int categoryNum = contentDao.getCategoryNum();
@@ -80,7 +80,7 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public Integer getTagCount() {
         String tagCount = redisClient.get("tagCount");
-        if(!StringUtils.isEmpty(tagCount)) {
+        if (!StringUtils.isEmpty(tagCount)) {
             return Integer.parseInt(tagCount);
         }
         int tagNum = contentDao.getTagNum();
@@ -91,7 +91,7 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public Integer getCommentsCount() {
         String commentsCount = redisClient.get("commentsCount");
-        if(!StringUtils.isEmpty(commentsCount)) {
+        if (!StringUtils.isEmpty(commentsCount)) {
             return Integer.parseInt(commentsCount);
         }
         int cc = contentDao.getCommentsCount();
@@ -116,22 +116,22 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public List<Tag> getTagList() {
         String tagList = redisClient.get("tagList");
-        if(!StringUtils.isEmpty(tagList)) {
-            return JSON.parseArray(tagList,Tag.class);
+        if (!StringUtils.isEmpty(tagList)) {
+            return JSON.parseArray(tagList, Tag.class);
         }
         List<Tag> tl = contentDao.getTagList();
-        redisClient.setex("tagList",JSON.toJSONString(tl), (int) time);
+        redisClient.setex("tagList", JSON.toJSONString(tl), (int) time);
         return tl;
     }
 
     @Override
     public List<CategoryBean> getCategoryList() {
         String categoryList = redisClient.get("categoryList");
-        if(!StringUtils.isEmpty(categoryList)) {
-            return JSON.parseArray(categoryList,CategoryBean.class);
+        if (!StringUtils.isEmpty(categoryList)) {
+            return JSON.parseArray(categoryList, CategoryBean.class);
         }
         List<CategoryBean> cl = contentDao.getCategoryList();
-        redisClient.setex("categoryList",JSON.toJSONString(cl), (int) time);
+        redisClient.setex("categoryList", JSON.toJSONString(cl), (int) time);
         return cl;
     }
 
@@ -204,15 +204,39 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public void bindArticleAndTag(String aid, String tid) {
         contentDao.bindArticleAndTag(aid, tid, new Date());
+        contentDao.setTagForArticleCount(tid);
     }
 
     @Override
     public CategoryBean getCategory(String categoryId) {
+        String categoryList = redisClient.get("categoryList");
+        if (!StringUtils.isEmpty(categoryList)) {
+            List<CategoryBean> categoryBeans = JSON.parseArray(categoryList, CategoryBean.class);
+            for (CategoryBean categoryBean : categoryBeans) {
+                if (categoryBean != null && categoryBean.getId().equals(categoryId)) {
+                    return categoryBean;
+                }
+            }
+        }
         return contentDao.getCategory(categoryId);
     }
 
     @Override
+    public void bindArticleAndCategory(String cid) {
+        contentDao.setCategoryForArticleCount(cid);
+    }
+
+    @Override
     public Tag getTag(String tagId) {
+        String tagList = redisClient.get("tagList");
+        if (!StringUtils.isEmpty(tagList)) {
+            List<Tag> tags = JSON.parseArray(tagList, Tag.class);
+            for (Tag tag : tags) {
+                if (tag != null && tag.getId().equals(tagId)) {
+                    return tag;
+                }
+            }
+        }
         return contentDao.getTag(tagId);
     }
 
@@ -231,11 +255,11 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public List<FriendTypeList> getFriendTypeList() {
         String friendTypeList = redisClient.get("friendTypeList");
-        if(!StringUtils.isEmpty(friendTypeList)) {
-            return JSON.parseArray(friendTypeList,FriendTypeList.class);
+        if (!StringUtils.isEmpty(friendTypeList)) {
+            return JSON.parseArray(friendTypeList, FriendTypeList.class);
         }
         List<FriendTypeList> ftl = contentDao.getFriendTypeList();
-        redisClient.setex("friendTypeList",JSON.toJSONString(ftl), (int) time);
+        redisClient.setex("friendTypeList", JSON.toJSONString(ftl), (int) time);
         return ftl;
 
     }

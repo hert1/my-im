@@ -23,6 +23,12 @@ public interface ContentDao {
      */
     @Select("select * from article where id=#{id}")
     public ArticleBean getContentsByNum( String id);
+    /**\
+     *通过关键字查文章
+     * @return
+     */
+    @Select("select id,title,categoryId,createTime,deleteTime,updateTime,publishTime,status,cover,subMessage,pageview,isEncrypt from article where title like '%#{id}%' ")
+    public List<ArticleBean> searchArticle( String id);
     /**
      *通过状态查文章
      * @return
@@ -154,6 +160,16 @@ public interface ContentDao {
      */
     @Insert("insert into article_tag_mapper (article_id,tag_id,create_time) values(#{aid},#{tid},#{date})")
     public void bindArticleAndTag(String aid, String tid, Date date);
+    /**
+     * 设置tag的文章数加1
+     */
+    @Update("update tag SET article_count = article_count +1  WHERE id = #{tid};")
+    public void setTagForArticleCount( String tid);
+    /**
+     * 设置tag的文章数加1
+     */
+    @Update("update tag SET article_count = article_count +1  WHERE id = #{tid};")
+    public void setCategoryForArticleCount( String tid);
     /**
      * 删除标签和文章关联关系
      */

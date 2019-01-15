@@ -19,4 +19,5 @@ public class BaseArticleBean implements Serializable {
     private int pageSize;
     private int status;//文章状态
     private String tagId;
+    private String searchValue;//搜索关键字
 }
