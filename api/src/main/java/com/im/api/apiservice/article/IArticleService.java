@@ -16,6 +16,11 @@ public interface IArticleService {
      * @return
      */
     public List<ArticleBean> getArticleByNumAndSize(BaseArticleBean articleList);
+    /**\
+     *
+     * @return
+     */
+    public List<ArticleBean> searchArticle(BaseArticleBean articleList);
 
     /**
      * 查询文章数量

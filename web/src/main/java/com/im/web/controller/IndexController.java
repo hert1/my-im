@@ -100,7 +100,7 @@ public class IndexController {
      * @return
      * @throws Exception
      */
-    @PostMapping(value = {"/article/list","/article/archives","/article/search"})
+    @PostMapping(value = {"/article/list","/article/archives"})
     @ResponseBody
     public BaseResponse index(@RequestBody GetArticleListReq req) throws Exception {
         IndexResp indexResp = new IndexResp();
@@ -127,5 +127,34 @@ public class IndexController {
 
     }
 
-
+    /**
+     *
+     * 按文章标题和简介搜索
+     * @return
+     */
+    @PostMapping(value = {"/article/search"})
+    @ResponseBody
+    public BaseResponse searchArticle(@RequestBody GetArticleListReq req) {
+        IndexResp indexResp = new IndexResp();
+        List<ArticleInfo> articleInfoList = new LinkedList<>();
+        BaseArticleBean articleList = new BaseArticleBean();
+        BeanUtils.copyProperties(req,articleList);
+        List<ArticleBean> articleBeans = articleService.searchArticle(articleList);
+        articleBeans.forEach(articleBean -> {
+            ArticleInfo articleInfo = new ArticleInfo();
+            String categoryId = articleBean.getCategoryId();
+            List<CategoryBean> categoryByArticleCategoryId = categoryService.getCategoryByArticleCategoryId(categoryId);
+            List<Tag> tagByArticleId = articleService.getTagByArticleId(articleBean.getId());
+            articleInfo.setArticle(articleBean);
+            articleInfo.setTags(tagByArticleId);
+            if (categoryByArticleCategoryId != null && categoryByArticleCategoryId.size() > 0) {
+                articleInfo.setCategory(categoryByArticleCategoryId.get(0));
+            }
+            articleInfoList.add(articleInfo);
+        });
+        indexResp.setList(articleInfoList);
+        Integer articleNum = articleService.getArticleNum(0);
+        indexResp.setCount(articleNum);
+        return BaseResponse.ok(indexResp);
+    }
 }

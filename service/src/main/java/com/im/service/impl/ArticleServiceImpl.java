@@ -7,16 +7,29 @@ import com.im.api.apiservice.article.IArticleService;
 import com.im.api.dto.article.*;
 import com.im.api.util.UUID;
 import com.im.redis.client.RedisClient;
+import com.im.service.config.SolrConfig;
 import com.im.service.dao.ArticleDao;
 import com.im.service.dao.ContentDao;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.params.ModifiableSolrParams;
+import org.apache.solr.common.util.NamedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -29,6 +42,9 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl implements IArticleService {
 
+
+    @Autowired
+    private SolrConfig solrConfig;
     @Autowired
     ArticleDao articleDao;
     @Autowired
@@ -53,6 +69,12 @@ public class ArticleServiceImpl implements IArticleService {
             contentsByNumAndSize = contentDao.getContentsByNumAndSize(articleList.getStatus());//0正常发布
         }
         return contentsByNumAndSize;
+    }
+
+    @Override
+    public List<ArticleBean> searchArticle(BaseArticleBean articleList) {
+        List<ArticleBean> query = solrConfig.query(articleList.getSearchValue(), ArticleBean.class);
+        return query;
     }
 
     @Override
