@@ -32,9 +32,8 @@ public class SolrConfig {
     public <T>  List<T> query(String key, Class<T> clazz) {
 
         SolrQuery query = new SolrQuery();
-        query.set("q", key);
-        query.set("fl", "title,subMessage");
-        query.setHighlight(true);
+        query.setQuery( key);
+        query.set("df", "keywords");
         QueryResponse resp = null;
         List<T> convent = null;
         try {
