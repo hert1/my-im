@@ -28,16 +28,16 @@ import java.util.List;
 @RequestMapping(value = "w")
 public class IndexController {
 
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     IArticleService articleService;
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     ICategoryService categoryService;
 
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     IArticle article;
     @Autowired
     RedisClient redisClient;
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     IUserService userService;
 
 

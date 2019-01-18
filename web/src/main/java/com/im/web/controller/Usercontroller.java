@@ -24,7 +24,7 @@ import static com.im.api.util.UUID.UU64;
 @RequestMapping(value = "/a")
 public class Usercontroller {
 
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     IUserService userService;
     @Autowired
     UserSession userSession;

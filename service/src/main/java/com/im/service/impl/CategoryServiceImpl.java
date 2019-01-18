@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Component
 @Slf4j
-@Service
+@Service(version = "1.0",timeout = 3000)
 public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired

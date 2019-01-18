@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Component
 @Slf4j
-@Service
+@Service(version = "1.0",timeout = 3000)
 public class ArticleImpl implements IArticle {
     @Autowired
     ArticleDao articleDao;

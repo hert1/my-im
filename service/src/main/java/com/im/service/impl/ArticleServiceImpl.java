@@ -39,7 +39,7 @@ import java.util.Map;
  */
 @Component
 @Slf4j
-@Service
+@Service(version = "1.0",timeout = 3000)
 public class ArticleServiceImpl implements IArticleService {
 
 

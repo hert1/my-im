@@ -20,7 +20,7 @@ import org.springframework.util.StringUtils;
  */
 
 @Slf4j
-@Service
+@Service(version = "1.0",timeout = 3000)
 @Component
 public class AdminServiceImpl implements IAdminService {
 

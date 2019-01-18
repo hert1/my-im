@@ -42,13 +42,13 @@ public class AdminController {
     @Value("${file_server_addr}")
     public  String fileServerAddr;
 
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     IUserService userService;
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     IAdminService adminService;
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     IArticleService articleService;
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     IArticle article;
 
     /**

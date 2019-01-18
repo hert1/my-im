@@ -193,7 +193,7 @@ public interface ContentDao {
     /**
      * 通过articleID获取tag
      */
-    @Select("SELECT tag.* FROM tag ,article,article_tag_mapper WHERE article_tag_mapper.article_id = article_tag_mapper.tag_id and article.id = #{articleId} ")
+    @Select("SELECT tag.* FROM tag ,article_tag_mapper WHERE tag.id = article_tag_mapper.tag_id AND article_tag_mapper.article_id = #{articleId} ")
     public List<Tag> getTagByArticleId( String articleId);
     /**
      * select friends

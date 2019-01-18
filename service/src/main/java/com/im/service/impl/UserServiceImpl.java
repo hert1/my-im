@@ -22,7 +22,7 @@ import javax.validation.constraints.NotEmpty;
 /**
  * Created by BlueT on 2018/12/3.
  */
-@Service
+@Service(version = "1.0",timeout = 3000)
 @Component
 public class UserServiceImpl implements IUserService {
 

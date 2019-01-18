@@ -27,13 +27,13 @@ import java.util.List;
 @Controller
 public class ArticleController {
 
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     IArticleService articleService;
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     IArticle article;
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     IAdminService adminService;
-    @Reference
+    @Reference(version = "1.0",timeout = 5000)
     ICategoryService categoryService;
     @Autowired
     RedisClient redisClient;
