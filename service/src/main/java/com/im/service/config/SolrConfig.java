@@ -74,7 +74,13 @@ public class SolrConfig {
                         if("id".equals(name)) {
                             declaredField.set(obj, value);
                         } else {
-                            declaredField.set(obj, ((List)value).get(0));
+                            if(value instanceof List) {
+                                declaredField.set(obj, ((List)value).get(0));
+                            }
+                            if(value instanceof String) {
+                                declaredField.set(obj,value);
+                            }
+
                         }
                     }
                 }
