@@ -13,7 +13,6 @@ import java.util.Locale;
  */
 @Setter
 @Getter
-public class IndexResp {
+public class IndexResp extends BaseInfoResp{
     private List list;
-    private int count;
 }

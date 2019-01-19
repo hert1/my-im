@@ -6,20 +6,20 @@ import com.im.api.dto.article.Tag;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author viruser
- * @create 2019/1/7
+ * @create 2019/1/18
  * @since 1.0.0
  */
 @Getter
 @Setter
-public class Article {
-    private ArticleBean article;
-    private List<CategoryBean> category;
-    private Tag tags;
-    private List<Article> list;
-    private int count;
+public class BaseInfoResp implements Serializable {
+    private ArticleBean article;//文章
+    private List<Tag> tags;//标签
+    private CategoryBean category;//类别
+    private int count;//数目
 
 }

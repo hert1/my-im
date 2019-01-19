@@ -95,6 +95,21 @@ public class IndexController {
     }
 
     /**
+     *
+     * blog article info
+     * @return
+     */
+    @GetMapping(value = {"/article_blog"})
+    @ResponseBody
+    public BaseResponse getBlogArticleInfo() {
+        ArticleBaseBlogResp resp = new ArticleBaseBlogResp();
+        List<ArticleBean> newArticle = articleService.getNewArticle();
+        List<CommentBean> newComment = articleService.getNewComment();
+        resp.setNewArticle(newArticle);
+        resp.setNewComment(newComment);
+        return BaseResponse.ok(resp);
+    }
+    /**
      * 首页
      *
      * @return

@@ -58,6 +58,19 @@ public interface ContentDao {
             + "</script>")
     public List<ArticleBean> getContents(@Param("aid")List aid);
 
+
+    /**\
+     *获取最新文章
+     * @return
+     */
+    @Select("select id,title from article order by aid desc limit 0,10 ")
+    public List<ArticleBean> getNewArticle();
+    /**\
+     *获取最新评论
+     * @return
+     */
+    @Select("select article_id,source_content from comments order by id desc limit 0,10 ")
+    public List<CommentBean> getNewComment();
     /**
      * 条数
      * @return

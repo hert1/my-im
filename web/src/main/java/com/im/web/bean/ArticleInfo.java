@@ -15,10 +15,7 @@ import java.util.List;
  */
 @Setter
 @Getter
-public class ArticleInfo {
+public class ArticleInfo extends BaseInfoResp {
 
-    private ArticleBean article;//文章
-    private List<Tag> tags;//标签
-    private CategoryBean category;//类别
 
 }

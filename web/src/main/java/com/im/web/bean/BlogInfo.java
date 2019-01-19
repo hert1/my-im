@@ -10,7 +10,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class BlogInfo {
+public class BlogInfo extends BaseInfoResp{
     private Integer articleCount;
     private String blogName;
     private Integer categoryCount;

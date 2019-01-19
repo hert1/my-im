@@ -11,25 +11,13 @@ import com.im.service.config.SolrConfig;
 import com.im.service.dao.ArticleDao;
 import com.im.service.dao.ContentDao;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.apache.solr.client.solrj.response.FacetField;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.common.params.ModifiableSolrParams;
-import org.apache.solr.common.util.NamedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -75,6 +63,17 @@ public class ArticleServiceImpl implements IArticleService {
     public List<ArticleBean> searchArticle(BaseArticleBean articleList) {
         List<ArticleBean> query = solrConfig.query(articleList.getSearchValue(), ArticleBean.class);
         return query;
+    }
+
+    @Override
+    public List<ArticleBean> getNewArticle() {
+
+        return contentDao.getNewArticle();
+    }
+
+    @Override
+    public List<CommentBean> getNewComment() {
+        return contentDao.getNewComment();
     }
 
     @Override

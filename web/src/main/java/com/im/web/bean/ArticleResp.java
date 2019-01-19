@@ -15,9 +15,6 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class ArticleResp {
+public class ArticleResp extends BaseInfoResp{
 
-    private ArticleBean article;
-    private CategoryBean category;
-    private List<Tag> tags;
 }

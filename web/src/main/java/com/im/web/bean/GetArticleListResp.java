@@ -14,10 +14,9 @@ import java.util.List;
  */
 @Setter
 @Getter
-public class GetArticleListResp implements Serializable {
+public class GetArticleListResp extends BaseInfoResp implements Serializable {
 
     private List list ;
 
-    private Integer count;
 
 }
