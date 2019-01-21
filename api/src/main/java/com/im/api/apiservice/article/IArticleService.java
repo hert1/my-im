@@ -17,10 +17,15 @@ public interface IArticleService {
      */
     public List<ArticleBean> getArticleByNumAndSize(BaseArticleBean articleList);
     /**\
-     *搜索
+     *搜索全部
      * @return
      */
     public List<ArticleBean> searchArticle(BaseArticleBean articleList);
+    /**\
+     *分页搜索
+     * @return
+     */
+    public List<ArticleBean> searchArticleByPage(BaseArticleBean articleList,int page,int pageSize);
     /**\
      *获取最新文章
      * @return

@@ -1,6 +1,5 @@
 package com.im.service.config;
 
-import com.im.api.dto.article.ArticleBean;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -29,10 +28,24 @@ public class SolrConfig {
     ;
     public final SolrClient server = new HttpSolrClient.Builder(solrHost).build();
 
-    public <T>  List<T> query(String key, Class<T> clazz) {
+    /**
+     * 如果page和pageSize都为-1的话默认搜索全部
+     *
+     * @param key
+     * @param clazz
+     * @param page
+     * @param pageSize
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> query(String key, Class<T> clazz, int page, int pageSize) {
 
         SolrQuery query = new SolrQuery();
-        query.setQuery( key);
+        if (page != -1 && pageSize != -1) {
+            query.setStart(page);
+            query.setRows(pageSize);
+        }
+        query.setQuery(key);
         query.set("df", "keywords");
         QueryResponse resp = null;
         List<T> convent = null;
@@ -47,7 +60,7 @@ public class SolrConfig {
         SolrDocumentList results = resp.getResults();
         try {
 
-            convent  = convent(results,clazz);
+            convent = convent(results, clazz);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
@@ -71,14 +84,14 @@ public class SolrConfig {
                     String name = declaredField.getName();
                     if (name.equals(fieldName)) {
                         declaredField.setAccessible(true);
-                        if("id".equals(name)) {
+                        if ("id".equals(name)) {
                             declaredField.set(obj, value);
                         } else {
-                            if(value instanceof List) {
-                                declaredField.set(obj, ((List)value).get(0));
+                            if (value instanceof List) {
+                                declaredField.set(obj, ((List) value).get(0));
                             }
-                            if(value instanceof String) {
-                                declaredField.set(obj,value);
+                            if (value instanceof String) {
+                                declaredField.set(obj, value);
                             }
 
                         }

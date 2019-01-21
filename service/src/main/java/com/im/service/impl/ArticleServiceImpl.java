@@ -60,8 +60,14 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
+    public List<ArticleBean> searchArticleByPage(BaseArticleBean articleList, int page, int pageSize) {
+        List<ArticleBean> query = solrConfig.query(articleList.getSearchValue(), ArticleBean.class,page,pageSize);
+        return query;
+    }
+
+    @Override
     public List<ArticleBean> searchArticle(BaseArticleBean articleList) {
-        List<ArticleBean> query = solrConfig.query(articleList.getSearchValue(), ArticleBean.class);
+        List<ArticleBean> query = solrConfig.query(articleList.getSearchValue(), ArticleBean.class,-1,-1);
         return query;
     }
 

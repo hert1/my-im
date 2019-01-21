@@ -143,7 +143,6 @@ public class IndexController {
     }
 
     /**
-     *
      * 按文章标题和简介搜索
      * @return
      */
@@ -154,7 +153,7 @@ public class IndexController {
         List<ArticleInfo> articleInfoList = new LinkedList<>();
         BaseArticleBean articleList = new BaseArticleBean();
         BeanUtils.copyProperties(req,articleList);
-        List<ArticleBean> articleBeans = articleService.searchArticle(articleList);
+        List<ArticleBean> articleBeans = articleService.searchArticleByPage(articleList, req.getPage(), req.getPageSize());
         articleBeans.forEach(articleBean -> {
             ArticleInfo articleInfo = new ArticleInfo();
             String categoryId = articleBean.getCategoryId();
@@ -168,7 +167,7 @@ public class IndexController {
             articleInfoList.add(articleInfo);
         });
         indexResp.setList(articleInfoList);
-        Integer articleNum = articleService.getArticleNum(0);
+        Integer articleNum = articleService.searchArticle(articleList).size();
         indexResp.setCount(articleNum);
         return BaseResponse.ok(indexResp);
     }
