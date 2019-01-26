@@ -206,7 +206,7 @@ public class ArticleServiceImpl implements IArticleService {
         tags.forEach(tag -> {
             String tid = tag.getAid();
             contentDao.bindArticleAndTag(id, tid, new Date());
-            contentDao.setTagForArticleCount(tid);
+          //  contentDao.setTagForArticleCount(tid);
         });
         contentDao.publArticle(articleBean);
     }
@@ -223,7 +223,7 @@ public class ArticleServiceImpl implements IArticleService {
         tags.forEach(tag -> {
             String tid = tag.getAid();
             contentDao.bindArticleAndTag(id, tid, new Date());
-            contentDao.setTagForArticleCount(tid);
+          //  contentDao.setTagForArticleCount(tid);
         });
         contentDao.saveArticle(articleBean);
     }
@@ -237,7 +237,7 @@ public class ArticleServiceImpl implements IArticleService {
         tags.forEach(tag -> {
             String tid = tag.getAid();
             contentDao.bindArticleAndTag(articleBean.getAid(), tid, new Date());
-            contentDao.setTagForArticleCount(tid);
+          //  contentDao.setTagForArticleCount(tid);
         });
         contentDao.modifyArticle(articleBean);
     }
@@ -303,10 +303,11 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public List<FriendsBean> getFriendsList(int page, int pageSize) {
+    public PageInfo<FriendsBean> getFriendsList(int page, int pageSize) {
         PageHelper.startPage(page, pageSize);
 
-        return contentDao.getFriendsList();
+        List<FriendsBean> friendsList = contentDao.getFriendsList();
+        return new PageInfo<>(friendsList);
     }
 
     @Override

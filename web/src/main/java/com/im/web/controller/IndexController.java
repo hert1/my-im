@@ -33,9 +33,6 @@ public class IndexController {
     IArticleService articleService;
     @Reference(version = "1.0",timeout = 5000)
     ICategoryService categoryService;
-
-    @Reference(version = "1.0",timeout = 5000)
-    IArticle article;
     @Autowired
     RedisClient redisClient;
     @Reference(version = "1.0",timeout = 5000)
@@ -50,8 +47,8 @@ public class IndexController {
     @GetMapping(value = {"/friends/list"})
     @ResponseBody
     public BaseResponse getBlogFriendsList() {
-        List<FriendsBean> friendsList = articleService.getFriendsList(1,44);
-        return BaseResponse.ok(friendsList);
+        PageInfo<FriendsBean> friendsList = articleService.getFriendsList(1,44);
+        return BaseResponse.ok(friendsList.getList());
     }
     /**
      * 获取标签列表

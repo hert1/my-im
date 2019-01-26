@@ -393,8 +393,8 @@ public class AdminController {
     @GetMapping(value = "/friends/list")
     @ResponseBody
     public BaseResponse getFriendsList(@RequestParam int page,@RequestParam int pageSize) throws Exception {
-        List<FriendsBean> friendsList = articleService.getFriendsList(page, pageSize);
-        return BaseResponse.ok(friendsList);
+        PageInfo<FriendsBean> friendsList = articleService.getFriendsList(page, pageSize);
+        return BaseResponse.ok(friendsList.getList());
     }
     /**
      * 添加友链

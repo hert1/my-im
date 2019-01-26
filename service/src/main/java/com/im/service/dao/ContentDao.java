@@ -202,7 +202,6 @@ public interface ContentDao {
      * 发布文章
      */
     @Insert("<script>" +
-            "update category SET article_count = article_count +1  WHERE aid = #{categoryId};" +
             "insert into article (aid,title,create_time,category_id,content,html_content,cover,sub_message) " +
             "values(#{aid},#{title},#{createTime},#{categoryId},#{content},#{htmlContent},#{cover},#{subMessage});" +
             "</script>")
@@ -217,7 +216,6 @@ public interface ContentDao {
      * edit文章
      */
     @Update("<script>" +
-            "update category SET article_count = article_count +1  WHERE aid = #{categoryId};" +
             "update article set title = #{title},update_time = #{updateTime},category_id = #{categoryId}," +
             "content = #{content},html_content = #{htmlContent},cover = #{cover},sub_message = #{subMessage} where aid = #{aid}" +
             "</script>")
@@ -235,7 +233,12 @@ public interface ContentDao {
     /**
      * 绑定标和文章
      */
-    @Insert("insert into article_tag_mapper (article_id,tag_id,create_time) values(#{aid},#{tid},#{date})")
+    @Insert("<script>" +
+            "insert into article_tag_mapper (article_id,tag_id,create_time)" +
+            "select #{aid},#{tid},#{date} from dual  WHERE NOT EXISTS (" +
+            "SELECT * FROM article_tag_mapper WHERE article_id = #{aid} AND tag_id = #{tid} " +
+            ")" +
+            "</script>")
     public void bindArticleAndTag(String aid, String tid, Date date);
     /**
      * 设置tag的文章数加1
@@ -292,7 +295,12 @@ public interface ContentDao {
     /**
      *添加friends
      */
-    @Insert("insert into friends (name,url,friend_id,create_time,type_id) values(#{name},#{url},#{friend_id},#{create_time},#{type_id})")
+    @Insert("<script>" +
+            "insert into friends (name,url,friend_id,create_time,type_id) " +
+            "select #{name},#{url},#{friend_id},#{create_time},#{type_id} from dual WHERE NOT EXISTS ( " +
+            "select id from friends where name = #{name} and url = #{url}" +
+            ")" +
+            "</script>")
     public void addFriends(FriendsBean bean);
     /**
      *删除friends

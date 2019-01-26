@@ -140,7 +140,7 @@ public interface IArticleService {
     /**
      *
      */
-    public List<FriendsBean> getFriendsList(int page, int pageSize);
+    public PageInfo<FriendsBean> getFriendsList(int page, int pageSize);
     /**
      *
      */
