@@ -1,5 +1,6 @@
 package com.im.api.apiservice.user;
 
+import com.im.api.dto.article.BlogInfoBean;
 import com.im.api.dto.user.AboutMeBean;
 import com.im.api.dto.user.BlogConfigBean;
 
@@ -14,7 +15,7 @@ public interface IAdminService {
      * 更新配置
      * @return
      */
-    void setWebConfig(BlogConfigBean blogConfigBean);
+    void setWebConfig(BlogInfoBean blogConfigBean);
     /**
      * 更新关于我
      * @return

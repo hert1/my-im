@@ -20,6 +20,6 @@ public class BaseInfoResp implements Serializable {
     private ArticleBean article;//文章
     private List<Tag> tags;//标签
     private CategoryBean category;//类别
-    private int count;//数目
+    private Long count;//数目
 
 }

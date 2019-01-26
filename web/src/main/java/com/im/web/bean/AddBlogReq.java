@@ -15,6 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 public class AddBlogReq {
+    private String aid;
     private String content;
     private CategoryBean category;
     private String cover;

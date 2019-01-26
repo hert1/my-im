@@ -12,11 +12,11 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class BlogInfoBean implements Serializable {
+public class BlogInfoBean extends BaseBean {
     /**
      * 支付宝支付二维码
      */
-    private String alipay_qrcode;
+    private String alipayQrcode;
     /**
      * 头像
      */
@@ -24,15 +24,11 @@ public class BlogInfoBean implements Serializable {
     /**
      * 博客名称
      */
-    private String blog_name;
+    private String blogName;
     /**
      * github
      */
     private String github;
-    /**
-     * id
-     */
-    private int id;
     /**
      * 阅读加密秘钥
      */
@@ -44,9 +40,9 @@ public class BlogInfoBean implements Serializable {
     /**
      * 阅读加密密码
      */
-    private String view_password;
+    private String viewPassword;
     /**
      * 微信支付二维码
      */
-    private String wxpay_qrcode;
+    private String wxpayQrcode;
 }

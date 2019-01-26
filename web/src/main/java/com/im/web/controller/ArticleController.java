@@ -66,13 +66,13 @@ public class ArticleController {
             , @RequestParam(defaultValue = "0") int parentId) {
         CommentBean commentBean = new CommentBean();
         commentBean.setName(name);
-        commentBean.setArticle_id(articleId);
-        commentBean.setParent_id(parentId);
-        commentBean.setReply_id(replyId);
+        commentBean.setArticleId(articleId);
+        commentBean.setParentId(parentId);
+        commentBean.setReplyId(replyId);
         commentBean.setEmail(email);
         commentBean.setContent(content);
-        commentBean.setSource_content(sourceContent);
-        commentBean.setCreate_time(new Date(System.currentTimeMillis()));
+        commentBean.setSourceContent(sourceContent);
+        commentBean.setCreateTime(new Date(System.currentTimeMillis()));
         int i = article.insertComments(commentBean);
         return new BaseResponse(true, "请求成功", 200, i);
     }
@@ -89,7 +89,7 @@ public class ArticleController {
         IndexResp indexResp = new IndexResp();
         List<CommentBean> commentsByAid = article.getCommentsByAid(id, 0);
         indexResp.setList(commentsByAid);
-        indexResp.setCount(commentsByAid.size());
+        indexResp.setCount(Long.valueOf(commentsByAid.size()));
         return new BaseResponse(true, "请求成功", 200, indexResp);
     }
 

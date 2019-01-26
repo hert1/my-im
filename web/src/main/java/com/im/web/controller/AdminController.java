@@ -1,6 +1,7 @@
 package com.im.web.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.github.pagehelper.PageInfo;
 import com.im.api.apiservice.article.IArticle;
 import com.im.api.apiservice.article.IArticleService;
 import com.im.api.apiservice.article.ICategoryService;
@@ -63,7 +64,6 @@ public class AdminController {
     public BaseResponse addCategory(@RequestParam String categoryName) throws Exception {
         CategoryBean categoryBean = new CategoryBean();
         categoryBean.setName(categoryName);
-        categoryBean.setId(UUID.UU64());
         articleService.addCategory(categoryBean);
         return BaseResponse.ok();
 
@@ -91,7 +91,6 @@ public class AdminController {
     @ResponseBody
     public BaseResponse addTag(@RequestParam String tagName) throws Exception {
         Tag tag = new Tag();
-        tag.setId(UUID.UU64());
         tag.setName(tagName);
         articleService.addTag(tag);
         return BaseResponse.ok();
@@ -109,15 +108,13 @@ public class AdminController {
     @GetMapping(value = "/category/list")
     @ResponseBody
     public BaseResponse getCategoryList(@RequestParam Boolean all) throws Exception {
-        List<CategoryBean> categoryBeans = null;
+        PageInfo<CategoryBean> categoryBeans = null;
         if (all) {
             categoryBeans  = articleService.getCategoryList();
-
         }
-        Integer categoryCount = articleService.getCategoryCount();
         GetArticleListResp resp = new GetArticleListResp();
-        resp.setList(categoryBeans);
-        resp.setCount(categoryCount);
+        resp.setList(categoryBeans.getList());
+        resp.setCount(categoryBeans.getTotal());
         return BaseResponse.ok(resp);
     }
 
@@ -153,11 +150,10 @@ public class AdminController {
     public BaseResponse getList(@RequestBody GetArticleListReq req) throws Exception {
         BaseArticleBean articleList = new BaseArticleBean();
         BeanUtils.copyProperties(req,articleList);
-        List<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(articleList);//0为状态正常发布
-        Integer articleNum = articleService.getArticleNum(articleList.getStatus());
+        PageInfo<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(articleList);//0为状态正常发布
         GetArticleListResp resp = new GetArticleListResp();
-        resp.setList(articleByNumAndSize);
-        resp.setCount(articleNum);
+        resp.setList(articleByNumAndSize.getList());
+        resp.setCount(articleByNumAndSize.getTotal());
         return BaseResponse.ok(resp);
     }
 
@@ -185,15 +181,13 @@ public class AdminController {
     @GetMapping(value = "/tag/list")
     @ResponseBody
     public BaseResponse getTagList(@RequestParam Boolean all) throws Exception {
-        List<Tag> tagList = null;
+        PageInfo<Tag> tagList = null;
         if (all) {
             tagList  = articleService.getTagList();
-
         }
-        Integer tagCount = articleService.getTagCount();
         GetArticleListResp resp = new GetArticleListResp();
-        resp.setList(tagList);
-        resp.setCount(tagCount);
+        resp.setList(tagList.getList());
+        resp.setCount(tagList.getTotal());
         return BaseResponse.ok(resp);
 
     }
@@ -211,10 +205,10 @@ public class AdminController {
         BlogInfoBean webConfig = userService.getBlogInfo();
         BlogConfigResp blogConfigResp = new BlogConfigResp();
         BeanUtils.copyProperties(webConfig, blogConfigResp);
-        blogConfigResp.setAlipayQrcode(webConfig.getAlipay_qrcode());
-        blogConfigResp.setBlogName(webConfig.getBlog_name());
-        blogConfigResp.setWxpayQrcode(webConfig.getWxpay_qrcode());
-        blogConfigResp.setViewPassword(webConfig.getView_password());
+        blogConfigResp.setAlipayQrcode(webConfig.getAlipayQrcode());
+        blogConfigResp.setBlogName(webConfig.getBlogName());
+        blogConfigResp.setWxpayQrcode(webConfig.getWxpayQrcode());
+        blogConfigResp.setViewPassword(webConfig.getViewPassword());
         blogConfigResp.setHadOldPassword(false);
         return BaseResponse.ok(blogConfigResp);
     }
@@ -247,12 +241,8 @@ public class AdminController {
     @PostMapping(value = "/webConfig/modify")
     @ResponseBody
     public BaseResponse setWebConfig(@RequestBody UpdataConfigReq req) throws Exception {
-        BlogConfigBean blogConfigBean = new BlogConfigBean();
+        BlogInfoBean blogConfigBean = new BlogInfoBean();
         BeanUtils.copyProperties(req, blogConfigBean);
-        blogConfigBean.setAlipay_qrcode(req.getAlipayQrcode());
-        blogConfigBean.setBlog_name(req.getBlogName());
-        blogConfigBean.setWxpay_qrcode(req.getWxpayQrcode());
-        blogConfigBean.setView_password(req.getViewPassword());
         adminService.setWebConfig(blogConfigBean);
         return BaseResponse.ok();
     }
@@ -323,19 +313,10 @@ public class AdminController {
     public BaseResponse publArticle(@RequestBody AddBlogReq req) throws Exception {
         ArticleBean articleBean = new ArticleBean();
         BeanUtils.copyProperties(req,articleBean);
-        articleBean.setCategoryId(req.getCategory().getId());
-        articleService.bindArticleAndCategory(req.getCategory().getId());
-        articleBean.setCreateTime(new Date());
-        articleBean.setPublishTime(new Date());
-        String id = UUID.UU64();
-        articleBean.setId(id);
+        articleBean.setCategoryId(req.getCategory().getAid());
         List<Tag> tags = req.getTags();
-        tags.forEach(tag -> {
-            String tid = tag.getId();
-            articleService.bindArticleAndTag(id,tid);
-        });
-        articleService.publArticle(articleBean);
-        return BaseResponse.ok(id);
+        articleService.publArticle(articleBean,tags);
+        return BaseResponse.ok(articleBean.getId());
 
     }
     /**
@@ -350,19 +331,11 @@ public class AdminController {
         ArticleBean articleBean = new ArticleBean();
         BeanUtils.copyProperties(req,articleBean);
         if(req.getCategory()!=null) {
-            articleBean.setCategoryId(req.getCategory().getId());
+            articleBean.setCategoryId(req.getCategory().getAid());
         }
-        articleBean.setCreateTime(new Date());
-        articleBean.setStatus(2);
-        String id = UUID.UU64();
-        articleBean.setId(id);
         List<Tag> tags = req.getTags();
-        tags.forEach(tag -> {
-            String tid = tag.getId();
-            articleService.bindArticleAndTag(id,tid);
-        });
-        articleService.saveArticle(articleBean);
-        return BaseResponse.ok(id);
+        articleService.saveArticle(articleBean,tags);
+        return BaseResponse.ok(articleBean.getId());
 
     }
     /**
@@ -376,18 +349,10 @@ public class AdminController {
     public BaseResponse modifyArticle(@RequestBody AddBlogReq req) throws Exception {
         ArticleBean articleBean = new ArticleBean();
         BeanUtils.copyProperties(req,articleBean);
-        articleBean.setCategoryId(req.getCategory().getId());
-        articleService.bindArticleAndCategory(req.getCategory().getId());
-        BeanUtils.copyProperties(req,articleBean);
-        articleBean.setCategoryId(req.getCategory().getId());
-        articleBean.setUpdateTime(new Date());
+        articleBean.setCategoryId(req.getCategory().getAid());
         List<Tag> tags = req.getTags();
-        tags.forEach(tag -> {
-            String tid = tag.getId();
-            articleService.bindArticleAndTag(articleBean.getId(),tid);
-        });
-        articleService.modifyArticle(articleBean);
-        return BaseResponse.ok(articleBean.getId());
+        articleService.modifyArticle(articleBean,tags);
+        return BaseResponse.ok(articleBean.getAid());
 
     }
     /**
@@ -495,12 +460,12 @@ public class AdminController {
             , @RequestParam(defaultValue = "0") int parentId) {
         CommentBean commentBean = new CommentBean();
         commentBean.setName(name);
-        commentBean.setArticle_id(articleId);
-        commentBean.setParent_id(parentId);
-        commentBean.setReply_id(replyId);
+        commentBean.setArticleId(articleId);
+        commentBean.setParentId(parentId);
+        commentBean.setReplyId(replyId);
         commentBean.setContent(content);
-        commentBean.setSource_content(sourceContent);
-        commentBean.setCreate_time(new java.sql.Date(System.currentTimeMillis()));
+        commentBean.setSourceContent(sourceContent);
+        commentBean.setCreateTime(new java.sql.Date(System.currentTimeMillis()));
         int i = article.insertComments(commentBean);
         return new BaseResponse(true, "请求成功", 200, i);
     }

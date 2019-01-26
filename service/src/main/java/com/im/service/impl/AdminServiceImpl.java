@@ -3,6 +3,7 @@ package com.im.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.im.api.apiservice.user.IAdminService;
+import com.im.api.dto.article.BlogInfoBean;
 import com.im.api.dto.user.AboutMeBean;
 import com.im.api.dto.user.BlogConfigBean;
 import com.im.redis.client.RedisClient;
@@ -33,7 +34,7 @@ public class AdminServiceImpl implements IAdminService {
 
 
     @Override
-    public void setWebConfig(BlogConfigBean blogConfigBean) {
+    public void setWebConfig(BlogInfoBean blogConfigBean) {
         redisClient.del("blogInfo");
         adminConfigDao.setWebConfig(blogConfigBean);
     }

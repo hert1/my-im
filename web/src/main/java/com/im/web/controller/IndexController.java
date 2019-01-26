@@ -1,6 +1,7 @@
 package com.im.web.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.github.pagehelper.PageInfo;
 import com.im.api.apiservice.article.IArticle;
 import com.im.api.apiservice.article.IArticleService;
 import com.im.api.apiservice.article.ICategoryService;
@@ -59,8 +60,8 @@ public class IndexController {
     @GetMapping(value = {"/tag/list"})
     @ResponseBody
     public BaseResponse getBlogTagList() {
-        List<Tag> tagList = articleService.getTagList();
-        return BaseResponse.ok(tagList);
+        PageInfo<Tag> tagList = articleService.getTagList();
+        return BaseResponse.ok(tagList.getList());
     }
     /**
      * 获取分类列表
@@ -69,8 +70,8 @@ public class IndexController {
     @GetMapping(value = {"/category/list"})
     @ResponseBody
     public BaseResponse getBlogCategoryList() {
-        List<CategoryBean> categoryBeans  = articleService.getCategoryList();
-        return BaseResponse.ok(categoryBeans);
+        PageInfo<CategoryBean> categoryBeans  = articleService.getCategoryList();
+        return BaseResponse.ok(categoryBeans.getList());
     }
 
     /**
@@ -86,7 +87,7 @@ public class IndexController {
         Integer tagCount = articleService.getTagCount();
         BlogInfoBean config = userService.getBlogInfo();
         BlogInfo blogInfo = new BlogInfo();
-        blogInfo.setBlogName(config.getBlog_name());
+        blogInfo.setBlogName(config.getBlogName());
         blogInfo.setSign(config.getSign());
         blogInfo.setArticleCount(articleCount);
         blogInfo.setCategoryCount(categoryCount);
@@ -122,12 +123,12 @@ public class IndexController {
         List<ArticleInfo> articleInfoList = new LinkedList<>();
         BaseArticleBean articleList = new BaseArticleBean();
         BeanUtils.copyProperties(req,articleList);
-        List<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(articleList);//0为状态正常发布
-        articleByNumAndSize.forEach(articleBean -> {
+        PageInfo<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(articleList);//0为状态正常发布
+        articleByNumAndSize.getList().forEach(articleBean -> {
             ArticleInfo articleInfo = new ArticleInfo();
             String categoryId = articleBean.getCategoryId();
             List<CategoryBean> categoryByArticleCategoryId = categoryService.getCategoryByArticleCategoryId(categoryId);
-            List<Tag> tagByArticleId = articleService.getTagByArticleId(articleBean.getId());
+            List<Tag> tagByArticleId = articleService.getTagByArticleId(articleBean.getAid());
             articleInfo.setArticle(articleBean);
             articleInfo.setTags(tagByArticleId);
             if (categoryByArticleCategoryId != null && categoryByArticleCategoryId.size() > 0) {
@@ -136,8 +137,7 @@ public class IndexController {
             articleInfoList.add(articleInfo);
         });
         indexResp.setList(articleInfoList);
-        Integer articleNum = articleService.getArticleNum(0);
-        indexResp.setCount(articleNum);
+        indexResp.setCount(articleByNumAndSize.getTotal());
         return BaseResponse.ok(indexResp);
 
     }
@@ -158,7 +158,7 @@ public class IndexController {
             ArticleInfo articleInfo = new ArticleInfo();
             String categoryId = articleBean.getCategoryId();
             List<CategoryBean> categoryByArticleCategoryId = categoryService.getCategoryByArticleCategoryId(categoryId);
-            List<Tag> tagByArticleId = articleService.getTagByArticleId(articleBean.getId());
+            List<Tag> tagByArticleId = articleService.getTagByArticleId(articleBean.getAid());
             articleInfo.setArticle(articleBean);
             articleInfo.setTags(tagByArticleId);
             if (categoryByArticleCategoryId != null && categoryByArticleCategoryId.size() > 0) {
@@ -168,7 +168,7 @@ public class IndexController {
         });
         indexResp.setList(articleInfoList);
         Integer articleNum = articleService.searchArticle(articleList).size();
-        indexResp.setCount(articleNum);
+        indexResp.setCount(Long.valueOf(articleNum));
         return BaseResponse.ok(indexResp);
     }
 }

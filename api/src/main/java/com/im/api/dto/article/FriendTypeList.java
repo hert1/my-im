@@ -12,9 +12,8 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class FriendTypeList implements Serializable {
-    private int id;
-    private String name;
+public class FriendTypeList extends BaseBean {
     private int count;
+    private String typeName;
 
 }

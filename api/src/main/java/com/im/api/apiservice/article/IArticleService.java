@@ -1,6 +1,7 @@
 package com.im.api.apiservice.article;
 
 
+import com.github.pagehelper.PageInfo;
 import com.im.api.dto.article.*;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface IArticleService {
      *获取文章集合
      * @return
      */
-    public List<ArticleBean> getArticleByNumAndSize(BaseArticleBean articleList);
+    public PageInfo<ArticleBean> getArticleByNumAndSize(BaseArticleBean articleList);
     /**\
      *搜索全部
      * @return
@@ -73,12 +74,12 @@ public interface IArticleService {
      * 获取标签列表
      * @return
      */
-    public List<Tag> getTagList();
+    public PageInfo<Tag> getTagList();
     /**
      * 获取分类列表
      * @return
      */
-    public List<CategoryBean> getCategoryList();
+    public PageInfo<CategoryBean> getCategoryList();
 
     /**
      * 删除标签
@@ -100,15 +101,15 @@ public interface IArticleService {
     /**
      * 发布文章
      */
-    public void publArticle( ArticleBean articleBean);
+    public void publArticle( ArticleBean articleBean,List<Tag> tags);
     /**
      * save文章
      */
-    public void saveArticle( ArticleBean articleBean);
+    public void saveArticle( ArticleBean articleBean,List<Tag> tags);
     /**
      * edit文章
      */
-    public void modifyArticle( ArticleBean articleBean);
+    public void modifyArticle( ArticleBean articleBean,List<Tag> tags);
     /**
      * remove文章
      */

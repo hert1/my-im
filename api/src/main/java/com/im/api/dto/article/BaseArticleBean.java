@@ -12,11 +12,9 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class BaseArticleBean implements Serializable {
+public class BaseArticleBean extends BaseBean {
     private String by;//状态
     private String categoryId;//分类id
-    private int page;
-    private int pageSize;
     private int status;//文章状态
     private String tagId;
     private String searchValue;//搜索关键字

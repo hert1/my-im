@@ -44,7 +44,7 @@ public class ArticleImpl implements IArticle {
         List<CommentBean> commentsByAid = articleDao.getCommentsByAid(fid, rid);
         if(commentsByAid!=null&&commentsByAid.size()>0){
             for (CommentBean commentBean : commentsByAid) {
-                Integer id = commentBean.getId();
+                Integer id = Integer.valueOf(commentBean.getId());
                 List<CommentBean> commentsByAid1 = getCommentsByAid(fid, id);
                 if(commentsByAid1==null&&commentsByAid1.size()==0) {
                     return commentsByAid;

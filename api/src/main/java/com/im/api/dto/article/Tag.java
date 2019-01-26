@@ -13,35 +13,15 @@ import java.util.Date;
  */
 @Setter
 @Getter
-public class Tag implements Serializable {
-    /**
-     * post表主键
-     */
-    private Integer aid;
+public class Tag extends BaseBean {
     /**
      * id
      */
-    private String id;
+    private String aid;
 
-    /**
-     * 标签名称
-     */
-    private String name;
-    /**
-     * 更新时间
-     */
-    private Date update_time;
-    /**
-     * 创建时间
-     */
-    private Date create_time;
-    /**
-     * 状态，0-正常（发布），1-删除，2-记录（待发布）
-     */
-    private int status;
     /**
      * 该标签的文章数量
      */
-    private int article_count;
+    private int articleCount;
     private int length;
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface CategoryDao {
 
-    @Select("select * from category where id=#{categoryId}")
+    @Select("select * from category where aid=#{categoryId}")
     public List<CategoryBean> getCategoryByArticleCategoryId(String categoryId);
 
 }

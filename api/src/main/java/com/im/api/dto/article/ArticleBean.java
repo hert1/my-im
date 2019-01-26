@@ -13,11 +13,7 @@ import java.util.Date;
  */
 @Setter
 @Getter
-public class ArticleBean implements Serializable {
-    /**
-     * post表主键
-     */
-    private Integer aid;
+public class ArticleBean extends BaseBean {
     /**
      * 文章分类id
      */
@@ -31,22 +27,13 @@ public class ArticleBean implements Serializable {
      */
     private String cover;
     /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 删除时间
-     */
-    private Date deleteTime;
-    /**
      * 生成的html
      */
     private String htmlContent;
     /**
      * 文章id
      */
-    private String id;
+    private String aid;
     /**
      * 是否加密，0否，1是，默认0
      */
@@ -56,14 +43,6 @@ public class ArticleBean implements Serializable {
      */
     private int pageview;
     /**
-     * 发布时间
-     */
-    private Date publishTime;
-    /**
-     * 状态，0-正常（发布），1-删除，2-记录（待发布）
-     */
-    private int status;
-    /**
      * 文章简述
      */
     private String subMessage;
@@ -71,10 +50,6 @@ public class ArticleBean implements Serializable {
      * 内容标题
      */
     private String title;
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 
 
 }
