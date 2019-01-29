@@ -16,7 +16,7 @@ public interface IArticleService {
      *获取文章集合
      * @return
      */
-    public PageInfo<ArticleBean> getArticleByNumAndSize(BaseArticleBean articleList);
+    public PageInfo<ArticleBean> getArticleList(BaseArticleBean articleList);
     /**\
      *搜索全部
      * @return
@@ -26,7 +26,7 @@ public interface IArticleService {
      *分页搜索
      * @return
      */
-    public List<ArticleBean> searchArticleByPage(BaseArticleBean articleList,int page,int pageSize);
+    public List<ArticleBean> searchArticleByKey(BaseArticleBean articleList, int page, int pageSize);
     /**\
      *获取最新文章
      * @return

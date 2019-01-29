@@ -49,5 +49,9 @@ public class User  implements Serializable {
      * 最后登录时间
      */
     private int last_login_time;
+    /**
+     * 是否超级管理员
+     */
+    private Boolean superadmin;
 
 }

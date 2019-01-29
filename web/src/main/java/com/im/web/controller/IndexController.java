@@ -2,13 +2,10 @@ package com.im.web.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.github.pagehelper.PageInfo;
-import com.im.api.apiservice.article.IArticle;
 import com.im.api.apiservice.article.IArticleService;
 import com.im.api.apiservice.article.ICategoryService;
-import com.im.api.apiservice.user.IAdminService;
 import com.im.api.apiservice.user.IUserService;
 import com.im.api.dto.article.*;
-import com.im.api.dto.user.AboutMeBean;
 import com.im.redis.client.RedisClient;
 import com.im.web.bean.*;
 import org.springframework.beans.BeanUtils;
@@ -16,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -120,7 +116,7 @@ public class IndexController {
         List<ArticleInfo> articleInfoList = new LinkedList<>();
         BaseArticleBean articleList = new BaseArticleBean();
         BeanUtils.copyProperties(req,articleList);
-        PageInfo<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(articleList);//0为状态正常发布
+        PageInfo<ArticleBean> articleByNumAndSize = articleService.getArticleList(articleList);//0为状态正常发布
         articleByNumAndSize.getList().forEach(articleBean -> {
             ArticleInfo articleInfo = new ArticleInfo();
             String categoryId = articleBean.getCategoryId();
@@ -150,7 +146,7 @@ public class IndexController {
         List<ArticleInfo> articleInfoList = new LinkedList<>();
         BaseArticleBean articleList = new BaseArticleBean();
         BeanUtils.copyProperties(req,articleList);
-        List<ArticleBean> articleBeans = articleService.searchArticleByPage(articleList, req.getPage(), req.getPageSize());
+        List<ArticleBean> articleBeans = articleService.searchArticleByKey(articleList, req.getPage(), req.getPageSize());
         articleBeans.forEach(articleBean -> {
             ArticleInfo articleInfo = new ArticleInfo();
             String categoryId = articleBean.getCategoryId();

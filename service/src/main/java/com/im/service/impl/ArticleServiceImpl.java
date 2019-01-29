@@ -45,24 +45,26 @@ public class ArticleServiceImpl implements IArticleService {
     long time;
 
     @Override
-    public PageInfo<ArticleBean> getArticleByNumAndSize(BaseArticleBean articleList) {
-        List<ArticleBean> contentsByNumAndSize = null;
+    public PageInfo<ArticleBean> getArticleList(BaseArticleBean articleList) {
+        List<ArticleBean> contentsBy = null;
         PageHelper.startPage(articleList.getPage(), articleList.getPageSize());
         if ("category".equals(articleList.getBy())) {
-            contentsByNumAndSize = contentDao.getContentsByCateory(articleList.getStatus(), articleList.getCategoryId());
+            contentsBy = contentDao.getContentsByCateory(articleList.getStatus(), articleList.getCategoryId());
         } else if ("tag".equals(articleList.getBy())) {
             List<String> articleIdByTag = contentDao.getArticleIdByTag(articleList.getTagId());
             if (articleIdByTag!=null && articleIdByTag.size()>0) {
-                contentsByNumAndSize = contentDao.getContents(articleIdByTag);
+                contentsBy = contentDao.getContents(articleIdByTag);
             }
-        }  else {
-            contentsByNumAndSize = contentDao.getContentsByNumAndSize(articleList.getStatus());//0正常发布
+        }  else if ("status".equals(articleList.getBy())) {
+            contentsBy = contentDao.getNewArticle();
+        } else {
+            contentsBy = contentDao.getContentsByNumAndSize(articleList.getStatus());//0正常发布
         }
-        return new PageInfo<>(contentsByNumAndSize);
+        return new PageInfo<>(contentsBy);
     }
 
     @Override
-    public List<ArticleBean> searchArticleByPage(BaseArticleBean articleList, int page, int pageSize) {
+    public List<ArticleBean> searchArticleByKey(BaseArticleBean articleList, int page, int pageSize) {
         List<ArticleBean> query = solrConfig.query(articleList.getSearchValue(), ArticleBean.class,page,pageSize);
         return query;
     }
@@ -75,7 +77,6 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public List<ArticleBean> getNewArticle() {
-
         return contentDao.getNewArticle();
     }
 

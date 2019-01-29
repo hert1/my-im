@@ -4,13 +4,10 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.github.pagehelper.PageInfo;
 import com.im.api.apiservice.article.IArticle;
 import com.im.api.apiservice.article.IArticleService;
-import com.im.api.apiservice.article.ICategoryService;
 import com.im.api.apiservice.user.IAdminService;
 import com.im.api.apiservice.user.IUserService;
 import com.im.api.dto.article.*;
 import com.im.api.dto.user.AboutMeBean;
-import com.im.api.dto.user.BlogConfigBean;
-import com.im.api.util.UUID;
 import com.im.web.bean.*;
 import com.im.web.config.FastDFSClient;
 import org.springframework.beans.BeanUtils;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -150,7 +146,7 @@ public class AdminController {
     public BaseResponse getList(@RequestBody GetArticleListReq req) throws Exception {
         BaseArticleBean articleList = new BaseArticleBean();
         BeanUtils.copyProperties(req,articleList);
-        PageInfo<ArticleBean> articleByNumAndSize = articleService.getArticleByNumAndSize(articleList);//0为状态正常发布
+        PageInfo<ArticleBean> articleByNumAndSize = articleService.getArticleList(articleList);//0为状态正常发布
         GetArticleListResp resp = new GetArticleListResp();
         resp.setList(articleByNumAndSize.getList());
         resp.setCount(articleByNumAndSize.getTotal());
