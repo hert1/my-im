@@ -76,7 +76,8 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public List<ArticleBean> getNewArticle() {
+    public List<ArticleBean> getNewArticle(BaseArticleBean articleList) {
+        PageHelper.startPage(articleList.getPage(), articleList.getPageSize());
         return contentDao.getNewArticle();
     }
 

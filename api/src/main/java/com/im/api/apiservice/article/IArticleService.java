@@ -31,7 +31,7 @@ public interface IArticleService {
      *获取最新文章
      * @return
      */
-    public List<ArticleBean> getNewArticle();
+    public List<ArticleBean> getNewArticle(BaseArticleBean articleList);
     /**\
      *获取最新评论
      * @return

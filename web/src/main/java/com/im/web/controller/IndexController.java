@@ -93,11 +93,13 @@ public class IndexController {
      * blog article info
      * @return
      */
-    @GetMapping(value = {"/article_blog"})
+    @PostMapping(value = {"/article_blog"})
     @ResponseBody
-    public BaseResponse getBlogArticleInfo() {
+    public BaseResponse getBlogArticleInfo(@RequestBody GetArticleListReq req) {
+        BaseArticleBean articleList = new BaseArticleBean();
+        BeanUtils.copyProperties(req,articleList);
         ArticleBaseBlogResp resp = new ArticleBaseBlogResp();
-        List<ArticleBean> newArticle = articleService.getNewArticle();
+        List<ArticleBean> newArticle = articleService.getNewArticle(articleList);
         List<CommentBean> newComment = articleService.getNewComment();
         resp.setNewArticle(newArticle);
         resp.setNewComment(newComment);
