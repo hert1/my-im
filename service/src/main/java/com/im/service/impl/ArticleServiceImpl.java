@@ -56,7 +56,7 @@ public class ArticleServiceImpl implements IArticleService {
                 contentsBy = contentDao.getContents(articleIdByTag);
             }
         }  else if ("status".equals(articleList.getBy())) {
-            contentsBy = contentDao.getNewArticle();
+            contentsBy = contentDao.getNewArticle(articleList.getStatus());
         } else {
             contentsBy = contentDao.getContentsByNumAndSize(articleList.getStatus());//0正常发布
         }
@@ -78,7 +78,7 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public List<ArticleBean> getNewArticle(BaseArticleBean articleList) {
         PageHelper.startPage(articleList.getPage(), articleList.getPageSize());
-        return contentDao.getNewArticle();
+        return contentDao.getNewArticle(0);//0 表示正常发布的文章
     }
 
     @Override
