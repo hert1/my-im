@@ -132,7 +132,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public void addCategory(CategoryBean category) {
-        redisClient.del("categoryList");
+        redisClient.del("categoryCount");
         category.setCreateTime(new java.util.Date());
         category.setAid(UUID.UU64());
         contentDao.addCategory(category);
@@ -140,7 +140,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     public void addTag(Tag tag) {
-        redisClient.del("tagList");
+        redisClient.del("tagCount");
         tag.setCreateTime(new java.util.Date());
         tag.setAid(UUID.UU64());
         contentDao.addTag(tag);
