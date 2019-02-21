@@ -28,7 +28,7 @@
     </appender>
 
 
-    <logger name="com.im.service.dao" level="DEBUG" additivity="false">
+    <logger name="com.im.service" level="DEBUG" additivity="false">
         <appender-ref ref="FILE" />
         <appender-ref ref="STDOUT" /> </logger>
     <root level="INFO">
