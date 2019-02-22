@@ -86,7 +86,9 @@ public interface ContentDao {
      *获取最新文章
      * @return
      */
-    @Select("select aid,title from article where status=#{status}  order by id desc ")
+    @Select("select aid,title,create_time,delete_time,update_time,publish_time,cover " +
+            "from article where status=#{status} order by id desc")
+    @ResultMap(value ="article" )
     public List<ArticleBean> getNewArticle(int status);
     /**\
      *获取最新评论
