@@ -18,6 +18,21 @@ public interface IArticleService {
      */
     public PageInfo<ArticleBean> getArticleList(BaseArticleBean articleList);
     /**\
+     *归档，年查询
+     * @return
+     */
+    public List<DateAndNumBean> archives();
+    /**\
+     *归档，通过年查询yue
+     * @return
+     */
+    public List<DateAndNumBean> archivesToMon(Long year);
+    /**\
+     *归档，通过年,月查询article
+     * @return
+     */
+    public List<ArticleBean> archivesByYearAndMonToArticle(Integer year,Integer mon);
+    /**\
      *搜索全部
      * @return
      */
@@ -42,23 +57,23 @@ public interface IArticleService {
      * 查询文章数量
      * @return
      */
-    public Integer getArticleNum( int status);
+    public Long getArticleNum( int status);
 
     /**
      * 查询所有分类
      * @return
      */
-    public Integer getCategoryCount();
+    public Long getCategoryCount();
     /**
      * 查询所有标签
      * @return
      */
-    public Integer getTagCount();
+    public Long getTagCount();
     /**
      * 查询所有回复
      * @return
      */
-    public Integer getCommentsCount();
+    public Long getCommentsCount();
 
     /**
      * 添加分类

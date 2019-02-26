@@ -122,12 +122,12 @@ public class AdminController {
     @GetMapping(value = "/statistics/home")
     @ResponseBody
     public BaseResponse getHome() throws Exception {
-        Integer publishCount = articleService.getArticleNum(0);//状态正常的文章总数
-        Integer draftsCount = articleService.getArticleNum(2);//草稿箱
-        Integer deletedCount = articleService.getArticleNum(1);//删除
-        Integer categoryCount = articleService.getCategoryCount();//分类数
-        Integer tagCount = articleService.getTagCount();//标签数
-        Integer commentsCount = articleService.getCommentsCount();//回复数
+        Long publishCount = articleService.getArticleNum(0);//状态正常的文章总数
+        Long draftsCount = articleService.getArticleNum(2);//草稿箱
+        Long deletedCount = articleService.getArticleNum(1);//删除
+        Long categoryCount = articleService.getCategoryCount();//分类数
+        Long tagCount = articleService.getTagCount();//标签数
+        Long commentsCount = articleService.getCommentsCount();//回复数
         StatisticsResp resp = new StatisticsResp();
         resp.setCategoryCount(categoryCount);
         resp.setCommentsCount(commentsCount);

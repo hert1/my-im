@@ -2,7 +2,6 @@ package com.im.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.im.api.apiservice.article.IArticleService;
@@ -64,6 +63,22 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
+    public List<DateAndNumBean> archives() {
+
+        return contentDao.archives(0);
+    }
+
+    @Override
+    public List<DateAndNumBean> archivesToMon(Long year) {
+        return contentDao.archivesToMon(year);
+    }
+
+    @Override
+    public List<ArticleBean> archivesByYearAndMonToArticle(Integer year, Integer mon) {
+        return contentDao.archivesByYearAndMonToArticle(year,mon);
+    }
+
+    @Override
     public List<ArticleBean> searchArticleByKey(BaseArticleBean articleList, int page, int pageSize) {
         List<ArticleBean> query = solrConfig.query(articleList.getSearchValue(), ArticleBean.class,page,pageSize);
         return query;
@@ -87,45 +102,45 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     @Override
-    public Integer getArticleNum(int status) {
+    public Long getArticleNum(int status) {
         String num = redisClient.get("status" + status);
         if (!StringUtils.isEmpty(num)) {
-            return Integer.parseInt(num);
+            return Long.valueOf(num);
         }
-        Integer contentsNum = contentDao.getContentsNum(status);
+        Long contentsNum = contentDao.getContentsNum(status);
         redisClient.setex("status" + status, String.valueOf(contentsNum), (int) time);
         return contentsNum;
     }
 
     @Override
-    public Integer getCategoryCount() {
+    public Long getCategoryCount() {
         String categoryCount = redisClient.get("categoryCount");
         if (!StringUtils.isEmpty(categoryCount)) {
-            return Integer.parseInt(categoryCount);
+            return Long.valueOf(categoryCount);
         }
-        int categoryNum = contentDao.getCategoryNum();
+        Long categoryNum = contentDao.getCategoryNum();
         redisClient.setex("categoryCount", String.valueOf(categoryNum), (int) time);
         return categoryNum;
     }
 
     @Override
-    public Integer getTagCount() {
+    public Long getTagCount() {
         String tagCount = redisClient.get("tagCount");
         if (!StringUtils.isEmpty(tagCount)) {
-            return Integer.parseInt(tagCount);
+            return Long.valueOf(tagCount);
         }
-        int tagNum = contentDao.getTagNum();
+        Long tagNum = contentDao.getTagNum();
         redisClient.setex("tagCount", String.valueOf(tagNum), (int) time);
         return tagNum;
     }
 
     @Override
-    public Integer getCommentsCount() {
+    public Long getCommentsCount() {
         String commentsCount = redisClient.get("commentsCount");
         if (!StringUtils.isEmpty(commentsCount)) {
-            return Integer.parseInt(commentsCount);
+            return Long.valueOf(commentsCount);
         }
-        int cc = contentDao.getCommentsCount();
+        Long cc = contentDao.getCommentsCount();
         redisClient.setex("commentsCount", String.valueOf(cc), (int) time);
         return cc;
     }

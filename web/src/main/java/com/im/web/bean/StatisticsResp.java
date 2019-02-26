@@ -14,10 +14,10 @@ import java.io.Serializable;
 @Setter
 public class StatisticsResp implements Serializable {
 
-    private int publishCount;
-    private int draftsCount;
-    private int deletedCount;
-    private int categoryCount;
-    private int tagCount;
-    private int commentsCount;
+    private Long publishCount;
+    private Long draftsCount;
+    private Long deletedCount;
+    private Long categoryCount;
+    private Long tagCount;
+    private Long commentsCount;
 }

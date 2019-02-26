@@ -1,10 +1,8 @@
 package com.im.service.dao;
 
 import com.im.api.dto.article.*;
-import jdk.nashorn.internal.objects.annotations.Setter;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 import java.util.List;
@@ -38,6 +36,33 @@ public interface ContentDao {
             "from article where status=#{status}")
     @ResultMap(value ="article" )
     public List<ArticleBean> getContentsByNumAndSize(int status);
+
+
+    /**
+     * 归档，年查询
+     * @param status
+     * @return
+     */
+    @Select("SELECT DATE_FORMAT(create_time ,'%Y' ) AS riqi,COUNT(*) AS num FROM article where status='0' GROUP BY DATE_FORMAT(create_time ,'%Y' )")
+    public List<DateAndNumBean> archives(int status);
+    /**
+     * 归档，通过年查询yue
+     * @param year
+     * @return
+     */
+    @Select("SELECT DATE_FORMAT(create_time ,'%m' )  AS riqi,COUNT(*) AS num FROM article WHERE DATE_FORMAT(create_time ,'%Y')=#{riqi} and status='0' GROUP BY DATE_FORMAT(create_time ,'%m') ")
+    public List<DateAndNumBean> archivesToMon(Long year);
+
+    /**
+     * 归档，通过年,月查询article
+     * @param year
+     * @return
+     */
+    @Select("SELECT aid,title,category_id,create_time,delete_time,update_time,publish_time,status,cover,sub_message,pageview,isEncrypt" +
+            " FROM article WHERE DATE_FORMAT(create_time ,'%Y')=#{year} AND DATE_FORMAT(create_time ,'%m')=#{mon} and status='0' ;")
+    @ResultMap(value ="article" )
+    public List<ArticleBean> archivesByYearAndMonToArticle(Integer year,Integer mon);
+
     /**
      *通过状态以及归类差文章
      * @return
@@ -114,26 +139,26 @@ public interface ContentDao {
      * @return
      */
     @Select("select count(*) from article where status=#{status}")
-    public Integer getContentsNum(int status);
+    public Long getContentsNum(int status);
 
     /**
      * 查询b分类数
      * @return
      */
     @Select("select count(*) from category")
-    public int getCategoryNum();
+    public Long getCategoryNum();
     /**
      * 查询b标签数
      * @return
      */
     @Select("select count(*) from tag")
-    public int getTagNum();
+    public Long getTagNum();
     /**
      * 查询b回复数
      * @return
      */
     @Select("select count(*) from comments")
-    public int getCommentsCount();
+    public Long getCommentsCount();
     /**
      * 添加分类
      * @return
