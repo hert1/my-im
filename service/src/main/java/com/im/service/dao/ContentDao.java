@@ -20,13 +20,14 @@ public interface ContentDao {
      *通过id查文章
      * @return
      */
-    @Select("select * from article where aid=#{id}")
+    @Select("select id,title,category_id from article where aid=#{id}")
+    @ResultMap(value ="article" )
     public ArticleBean getContentsByNum( String id);
     /**\
      *通过关键字查文章
      * @return
      */
-    @Select("select id,title,categoryId,createTime,deleteTime,updateTime,publishTime,status,cover,subMessage,pageview,isEncrypt from article where title like '%#{id}%' ")
+    @Select("select id,title,category_id,createTime,deleteTime,updateTime,publishTime,status,cover,subMessage,pageview,isEncrypt from article where title like '%#{id}%' ")
     public List<ArticleBean> searchArticle( String id);
     /**
      *通过状态查文章
@@ -90,7 +91,6 @@ public interface ContentDao {
     /**查询文章ID通过tagid
      * @return
      */
-
     @Select("select article_id from article_tag_mapper where tag_id=#{tagId} ")
     public List<String> getArticleIdByTag(String tagId);
     /**
@@ -273,10 +273,20 @@ public interface ContentDao {
     @Update("update tag SET article_count = article_count +1  WHERE aid = #{tid};")
     public void setTagForArticleCount( String tid);
     /**
+     * 设置tag的文章数-1
+     */
+    @Update("update tag SET article_count = article_count -1  WHERE aid = #{tid};")
+    public void setTagForArticleCountDel( String tid);
+    /**
      * category+1
      */
-    @Update("update tag SET article_count = article_count +1  WHERE aid = #{tid};")
+    @Update("update category SET article_count = article_count +1  WHERE aid = #{tid};")
     public void setCategoryForArticleCount( String tid);
+    /**
+     * category-1
+     */
+    @Update("update category SET article_count = article_count -1  WHERE aid = #{tid};")
+    public void setCategoryForArticleCountDel( String tid);
     /**
      * 删除标签和文章关联关系
      */

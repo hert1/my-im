@@ -225,6 +225,10 @@ public class ArticleServiceImpl implements IArticleService {
             contentDao.bindArticleAndTag(id, tid, new Date());
           //  contentDao.setTagForArticleCount(tid);
         });
+        contentDao.setCategoryForArticleCount(articleBean.getCategoryId());
+        tags.forEach(tag ->{
+            contentDao.setTagForArticleCount(tag.getAid());
+        });
         contentDao.publArticle(articleBean);
     }
 
@@ -251,11 +255,21 @@ public class ArticleServiceImpl implements IArticleService {
         redisClient.del("status1");
         redisClient.del("status2");
         articleBean.setUpdateTime(new Date());
+        //执行减
+        ArticleBean contentsByNum = contentDao.getContentsByNum(articleBean.getAid());//查询原有的文章
+        contentDao.setCategoryForArticleCountDel(contentsByNum.getCategoryId());
+        List<Tag> tagByArticleId = contentDao.getTagByArticleId(contentsByNum.getAid());
+        tagByArticleId.forEach(tag -> {
+            contentDao.setTagForArticleCountDel(tag.getAid());
+        });
+        //执行增加
         tags.forEach(tag -> {
             String tid = tag.getAid();
             contentDao.bindArticleAndTag(articleBean.getAid(), tid, new Date());
+            contentDao.setTagForArticleCount(tag.getAid());
           //  contentDao.setTagForArticleCount(tid);
         });
+        contentDao.setCategoryForArticleCount(articleBean.getCategoryId());
         contentDao.modifyArticle(articleBean);
     }
 
@@ -272,6 +286,11 @@ public class ArticleServiceImpl implements IArticleService {
                 contentDao.removeArticle(id);
             }
         }
+        contentDao.setCategoryForArticleCountDel(contentsByNum.getCategoryId());
+        List<Tag> tagByArticleId = contentDao.getTagByArticleId(id);
+        tagByArticleId.forEach(tag -> {
+            contentDao.setTagForArticleCountDel(tag.getAid());
+        });
         //  contentDao.modifyArticle(articleBean);
     }
 
